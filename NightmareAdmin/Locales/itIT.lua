@@ -1,7 +1,7 @@
 ﻿-------------------------------------------------------------------------------------------------------------
 --
--- NightmareAdmin Version 1.0
--- NightmareAdmin is a derivative of MangAdmin.
+-- NightmareAdmin
+
 --
 -- Copyright (C) 2007 Free Software Foundation, Inc.
 -- License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -12,15 +12,15 @@
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
--- Official Forums: http://groups.google.com/group/NightmareAdmin
--- GoogleCode Website: http://code.google.com/p/NightmareAdmin/
--- Subversion Repository: http://NightmareAdmin.googlecode.com/svn/
--- Dev Blog: http://NightmareAdmin.blogspot.com/
+
+
+
+
 -------------------------------------------------------------------------------------------------------------
 
 function Return_itIT() 
   return {
-    ["slashcmds"] = { "/mangadmin", "/ma" },
+    ["slashcmds"] = { "/NightmareAdmin", "/na" },
     ["lang"] = "Italian",
     ["realm"] = "|cFF00FF00Realm:|r "..GetCVar("realmName"),
     ["char"] = "|cFF00FF00Char:|r "..UnitName("player"),
@@ -40,14 +40,14 @@ function Return_itIT()
     ["tabmenu_Server"] = "Server",
     ["tabmenu_Log"] = "Log",
     ["tt_Default"] = "Sposta il mouse su di un elemento per visualizzarne la descrizione!",
-    ["tt_MainButton"] = "Clicca per attivare/disattivare la finestra di MangAdmin.",
+    ["tt_MainButton"] = "Clicca per attivare/disattivare la finestra di NightmareAdmin.",
     ["tt_CharButton"] = "Clicca per attivare/disattivare una finestra con azioni relative al Personaggio.",
     ["tt_TeleButton"] = "Clicca per attivare/disattivare una finestra con i controlli teletrasporto.",
     ["tt_TicketButton"] = "Clicca per attivare/disattivare una finestra con la lettura e l'amministrazione dei Tickets.",
     ["tt_MiscButton"] = "Clicca per attivare/disattivare una finestra con varie azioni.",
     ["tt_ServerButton"] = "Clicca questo pulsante per mostrare info sul Server e per interagire con esso.",
-    ["tt_LogButton"] = "Clicca questo pulsante per mostrare il Log delle azioni fatte con MangAdmin.",
-    ["tt_LanguageButton"] = "Clicca questo pulsante per cambiare la Lingua e ricaricare MangAdmin.",
+    ["tt_LogButton"] = "Clicca questo pulsante per mostrare il Log delle azioni fatte con NightmareAdmin.",
+    ["tt_LanguageButton"] = "Clicca questo pulsante per cambiare la Lingua e ricaricare NightmareAdmin.",
     ["tt_GMOnButton"] = "Clicca per attivare la tua modalit\195\160 GM (GM-ON).",
     ["tt_GMOffButton"] = "Clicca per disattivare la tua modalit\195\160 GM (GM-OFF).",
     ["tt_FlyOnButton"] = "Clicca per attivare la modalit\195\160 Volo per il personaggio selezionato.",
@@ -118,7 +118,7 @@ function Return_itIT()
     ["ma_TicketsNewNumber"] = "Hai |cffeda55f%s|r nuovi Ticket!",
     ["ma_TicketsGoLast"] = "Vai all'ultimo ticket creatore (%s).",
     ["ma_TicketsGetLast"] = "Porta %s da te.",
-    ["ma_IconHint"] = "|cffeda55fClicca|r per aprire MangAdmin. |cffeda55fShift-Clicca|r per ricaricare l'interfaccia di gioco. |cffeda55fAlt-Clicca|r per resettare il contatore di ticket.",
+    ["ma_IconHint"] = "|cffeda55fClicca|r per aprire NightmareAdmin. |cffeda55fShift-Clicca|r per ricaricare l'interfaccia di gioco. |cffeda55fAlt-Clicca|r per resettare il contatore di ticket.",
     ["ma_Reload"] = "Ricarica",
     ["ma_LoadMore"] = "Carica altri...",
     ["ma_MailRecipient"] = "Recipiente",

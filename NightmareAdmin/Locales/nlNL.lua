@@ -1,7 +1,7 @@
 ﻿-------------------------------------------------------------------------------------------------------------
 --
--- NightmareAdmin Version 1.0
--- NightmareAdmin is a derivative of MangAdmin.
+-- NightmareAdmin
+
 --
 -- Copyright (C) 2007 Free Software Foundation, Inc.
 -- License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -12,15 +12,15 @@
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
--- Official Forums: http://groups.google.com/group/NightmareAdmin
--- GoogleCode Website: http://code.google.com/p/NightmareAdmin/
--- Subversion Repository: http://NightmareAdmin.googlecode.com/svn/
--- Dev Blog: http://NightmareAdmin.blogspot.com/
+
+
+
+
 -------------------------------------------------------------------------------------------------------------
 
 function Return_nlNL()
   return {
-    ["slashcmds"] = { "/mangadmin", "/ma" },
+    ["slashcmds"] = { "/NightmareAdmin", "/na" },
     ["lang"] = "Dutch",
     ["realm"] = "|cFF00FF00Realm:|r "..GetCVar("realmName"),
     ["char"] = "|cFF00FF00Char:|r "..UnitName("player"),
@@ -40,14 +40,14 @@ function Return_nlNL()
     ["tabmenu_Server"] = "Server",
     ["tabmenu_Log"] = "Log",
     ["tt_Default"] = "Ga met uw cursor op een object staan voor meer informatie!",
-    ["tt_MainButton"] = "Open/Sluit MangAdmins Hoofdvenster.",
+    ["tt_MainButton"] = "Open/Sluit NightmareAdmins Hoofdvenster.",
     ["tt_CharButton"] = "Open/Sluit het Karaktervenster.",
     ["tt_TeleButton"] = "Open/Sluit het venster met Teleport mogelijkheden.",
     ["tt_TicketButton"] = "Open/Sluit het Ticketvenster die u de tickets laat beheren.",
     ["tt_MiscButton"] = "Open/Sluit het venster met Overige acties.",
     ["tt_ServerButton"] = "Toon verscheidene server opties en mogelijkheden.",
-    ["tt_LogButton"] = "Toon het log bestand van alle acties uitgevoerd in MangAdmin.",
-    ["tt_LanguageButton"] = "Verander de taal en herlaad MangAdmin.",
+    ["tt_LogButton"] = "Toon het log bestand van alle acties uitgevoerd in NightmareAdmin.",
+    ["tt_LanguageButton"] = "Verander de taal en herlaad NightmareAdmin.",
     ["tt_GMOnButton"] = "Activeer uw GM-mode.",
     ["tt_GMOffButton"] = "Deactiveer uw GM-mode.",
     ["tt_FlyOnButton"] = "Activateer de vlieg-modus van het geselecteerde karakter.",
@@ -118,7 +118,7 @@ function Return_nlNL()
     ["ma_TicketsNewNumber"] = "U heeft |cffeda55f%s|r nieuwe tickets!",
     ["ma_TicketsGoLast"] = "Ga naar laatste ticket aanmaker (%s).",
     ["ma_TicketsGetLast"] = "Breng %s naar u.",
-    ["ma_IconHint"] = "|cffeda55fKlik|r om MangAdmin te openen. |cffeda55fShift-klik|r om de User Interface te herladen. |cffeda55fAlt-klik|r om de tickets opnieuw te tellen.",
+    ["ma_IconHint"] = "|cffeda55fKlik|r om NightmareAdmin te openen. |cffeda55fShift-klik|r om de User Interface te herladen. |cffeda55fAlt-klik|r om de tickets opnieuw te tellen.",
     ["ma_Reload"] = "Herlaad",
     ["ma_LoadMore"] = "Laad meer...",
     ["ma_MailRecipient"] = "Ontvanger",

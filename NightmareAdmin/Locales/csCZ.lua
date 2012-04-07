@@ -1,7 +1,7 @@
 ﻿-------------------------------------------------------------------------------------------------------------
 --
--- NightmareAdmin Version 1.0
--- NightmareAdmin is a derivative of MangAdmin.
+-- NightmareAdmin
+
 --
 -- Copyright (C) 2007 Free Software Foundation, Inc.
 -- License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -12,15 +12,15 @@
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
--- Official Forums: http://groups.google.com/group/NightmareAdmin
--- GoogleCode Website: http://code.google.com/p/NightmareAdmin/
--- Subversion Repository: http://NightmareAdmin.googlecode.com/svn/
--- Dev Blog: http://NightmareAdmin.blogspot.com/
+
+
+
+
 -------------------------------------------------------------------------------------------------------------
 
 function Return_csCZ()
   return {
-    ["slashcmds"] = { "/mangadmin", "/ma" },
+    ["slashcmds"] = { "/NightmareAdmin", "/na" },
     ["lang"] = "Czech",
     ["realm"] = "|cFF00FF00Realm:|r "..GetCVar("realmName"),
     ["char"] = "|cFF00FF00Char:|r "..UnitName("player"),
@@ -40,14 +40,14 @@ function Return_csCZ()
     ["tabmenu_Server"] = "Server",
     ["tabmenu_Log"] = "Zaznam",
     ["tt_Default"] = "Prejed kurzorem pres element pro aktivaci napovedy!",
-    ["tt_MainButton"] = "Klikni sem pro navrat na hlavni obrazovku MangAdmina.",
+    ["tt_MainButton"] = "Klikni sem pro navrat na hlavni obrazovku NightmareAdmina.",
     ["tt_CharButton"] = "Klikni sem pro prepnuti na editaci postav.",
     ["tt_TeleButton"] = "Klikni sem pro prepnutí na okno s teleportaci.",
     ["tt_TicketButton"] = "Klikni sem pro prepnutí na spravu ticketu.",
     ["tt_MiscButton"] = "Klikni sem pro prepnuti do okna s ostatnim obsahem.",
     ["tt_ServerButton"] = "Klikni sem pro zobrazeni informaci o serveru a pro nastaveni veci tykajicich se serveru.",
-    ["tt_LogButton"] = "Klikni sem pro zobrazení zaznamu vsech akci provedenych MangAdminem.",
-    ["tt_LanguageButton"] = "Klikni sem pro zmenu vychoziho jazyka a restart MangAdmina.",
+    ["tt_LogButton"] = "Klikni sem pro zobrazení zaznamu vsech akci provedenych NightmareAdminem.",
+    ["tt_LanguageButton"] = "Klikni sem pro zmenu vychoziho jazyka a restart NightmareAdmina.",
     ["tt_GMOnButton"] = "Klikni pro aktivaci GM modu.",
     ["tt_GMOffButton"] = "Klikni pro deaktivaci GM modu.",
     ["tt_FlyOnButton"] = "Klikni pro aktivaci Fly modu pro vybranou postavu.",
@@ -118,7 +118,7 @@ function Return_csCZ()
     ["ma_TicketsNewNumber"] = "Mas |cffeda55f%s|r novych ticketu!",
     ["ma_TicketsGoLast"] = "Jdi k poslednimu tvurci ticketu (%s).",
     ["ma_TicketsGetLast"] = "Portni %s k sobe.",
-    ["ma_IconHint"] = "|cffeda55fKlikni|r pro otevreni MangAdmina. |cffeda55fShift-Klik|r pro restart interface. |cffeda55fAlt-Klik|r pro obnoveni poctu ticketu.",
+    ["ma_IconHint"] = "|cffeda55fKlikni|r pro otevreni NightmareAdmina. |cffeda55fShift-Klik|r pro restart interface. |cffeda55fAlt-Klik|r pro obnoveni poctu ticketu.",
     ["ma_Reload"] = "Obnov",
     ["ma_LoadMore"] = "Nacti vic...",
     ["ma_MailRecipient"] = "Prijemce",

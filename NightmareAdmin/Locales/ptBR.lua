@@ -1,7 +1,7 @@
 ﻿-------------------------------------------------------------------------------------------------------------
 --
--- NightmareAdmin Version 1.0
--- NightmareAdmin is a derivative of MangAdmin.
+-- NightmareAdmin
+
 --
 -- Copyright (C) 2007 Free Software Foundation, Inc.
 -- License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -12,16 +12,16 @@
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
--- Official Forums: http://groups.google.com/group/NightmareAdmin
--- GoogleCode Website: http://code.google.com/p/NightmareAdmin/
--- Subversion Repository: http://NightmareAdmin.googlecode.com/svn/
--- Dev Blog: http://NightmareAdmin.blogspot.com/
+
+
+
+
 -------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------
 
 function Return_ptPT() 
   return {
-    ["slashcmds"] = { "/mangadmin", "/ma" },
+    ["slashcmds"] = { "/NightmareAdmin", "/na" },
     ["lang"] = "Portuguese (PT)",
     ["realm"] = "|cFF00FF00Realm:|r "..GetCVar("realmName"),
     ["char"] = "|cFF00FF00Char:|r "..UnitName("player"),
@@ -41,14 +41,14 @@ function Return_ptPT()
     ["tabmenu_Server"] = "Servidor",
     ["tabmenu_Log"] = "Histórico",
     ["tt_Default"] = "Move o cursor sobre um elemento para mostrar a sua informação!",
-    ["tt_MainButton"] = "Clique para alterar a janela mostrando a parte Geral do MangAdmin.",
+    ["tt_MainButton"] = "Clique para alterar a janela mostrando a parte Geral do NightmareAdmin.",
     ["tt_CharButton"] = "Clique para alterar a janela com acções específicas de personagens.",
     ["tt_TeleButton"] = "Clique para alterar a janela com funções de teleporte.",
     ["tt_TicketButton"] = "Clique para alterar a janela que te mostra e possibilita a gestão de tickets.",
     ["tt_MiscButton"] = "Clique para alterar a janela que mostra várias acções.",
     ["tt_ServerButton"] = "Clique para mostrar varias informações e acções que ocorrem no servidor.",
-    ["tt_LogButton"] = "Click to show the log of all actions done with MangAdmin.",
-    ["tt_LanguageButton"] = "Clique para alterar o idioma e reniciar o MangAdmin.",
+    ["tt_LogButton"] = "Click to show the log of all actions done with NightmareAdmin.",
+    ["tt_LanguageButton"] = "Clique para alterar o idioma e reniciar o NightmareAdmin.",
     ["tt_GMOnButton"] = "Clique para activar o teu modo de GM.",
     ["tt_GMOffButton"] = "Clique para desactivar o teu modo de GM.",
     ["tt_FlyOnButton"] = "Clique para activar o modo de Voar no jogador selecionado.",
@@ -119,7 +119,7 @@ function Return_ptPT()
     ["ma_TicketsNewNumber"] = "You have |cffeda55f%s|r new tickets!",
     ["ma_TicketsGoLast"] = "Go to last ticket creator (%s).",
     ["ma_TicketsGetLast"] = "Bring %s to you.",
-    ["ma_IconHint"] = "|cffeda55fClick|r to open MangAdmin. |cffeda55fShift-Click|r to reload the user interface. |cffeda55fAlt-Click|r to reset the ticket count.",
+    ["ma_IconHint"] = "|cffeda55fClick|r to open NightmareAdmin. |cffeda55fShift-Click|r to reload the user interface. |cffeda55fAlt-Click|r to reset the ticket count.",
     ["ma_Reload"] = "Reload",
     ["ma_LoadMore"] = "Load more...",
     ["ma_MailRecipient"] = "Recipient",

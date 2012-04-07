@@ -1,7 +1,7 @@
 ﻿-------------------------------------------------------------------------------------------------------------
 --
--- NightmareAdmin Version 1.0
--- NightmareAdmin is a derivative of MangAdmin.
+-- NightmareAdmin
+
 --
 -- Copyright (C) 2007 Free Software Foundation, Inc.
 -- License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -12,15 +12,15 @@
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
--- Official Forums: http://groups.google.com/group/NightmareAdmin
--- GoogleCode Website: http://code.google.com/p/NightmareAdmin/
--- Subversion Repository: http://NightmareAdmin.googlecode.com/svn/
--- Dev Blog: http://NightmareAdmin.blogspot.com/
+
+
+
+
 -------------------------------------------------------------------------------------------------------------
 
 function Return_plPL() 
   return {
-    ["slashcmds"] = { "/mangadmin", "/ma" },
+    ["slashcmds"] = { "/NightmareAdmin", "/na" },
     ["lang"] = "Polish",
     ["realm"] = "|cFF00FF00Realm:|r "..GetCVar("realmName"),
     ["char"] = "|cFF00FF00Char:|r "..UnitName("player"),
@@ -46,8 +46,8 @@ function Return_plPL()
     ["tt_TicketButton"] = "Click to toggle a window which shows all tickets and lets you administrate them.",
     ["tt_MiscButton"] = "Click to toggle a window with miscellaneous actions.",
     ["tt_ServerButton"] = "Nacisnij przycisk, aby wyswietlic informacje o serwerze i przeprowadzic na nim operacje.",
-    ["tt_LogButton"] = "Nacisnij przycisk, aby zobaczyc historie operacji wykonanych przez MangAdmin.",
-    ["tt_LanguageButton"] = "Click this button to change the language and reload MangAdmin.",
+    ["tt_LogButton"] = "Nacisnij przycisk, aby zobaczyc historie operacji wykonanych przez NightmareAdmin.",
+    ["tt_LanguageButton"] = "Click this button to change the language and reload NightmareAdmin.",
     ["tt_GMOnButton"] = "Click to activate your GM-mode.",
     ["tt_GMOffButton"] = "Click to deactivate your GM-mode.",
     ["tt_FlyOnButton"] = "Click to activate the Fly-mode for the selected character.",
@@ -118,7 +118,7 @@ function Return_plPL()
     ["ma_TicketsNewNumber"] = "You have |cffeda55f%s|r new tickets!",
     ["ma_TicketsGoLast"] = "Go to last ticket creator (%s).",
     ["ma_TicketsGetLast"] = "Bring %s to you.",
-    ["ma_IconHint"] = "|cffeda55fClick|r to open MangAdmin. |cffeda55fShift-Click|r to reload the user interface. |cffeda55fAlt-Click|r to reset the ticket count.",
+    ["ma_IconHint"] = "|cffeda55fClick|r to open NightmareAdmin. |cffeda55fShift-Click|r to reload the user interface. |cffeda55fAlt-Click|r to reset the ticket count.",
     ["ma_Reload"] = "Reload",
     ["ma_LoadMore"] = "Load more...",
     ["ma_MailRecipient"] = "Recipient",

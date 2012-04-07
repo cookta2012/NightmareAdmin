@@ -1,7 +1,7 @@
 ﻿-------------------------------------------------------------------------------------------------------------
 --
--- NightmareAdmin Version 1.0
--- NightmareAdmin is a derivative of MangAdmin.
+-- NightmareAdmin
+
 --
 -- Copyright (C) 2007 Free Software Foundation, Inc.
 -- License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -12,15 +12,15 @@
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
--- Official Forums: http://groups.google.com/group/NightmareAdmin
--- GoogleCode Website: http://code.google.com/p/NightmareAdmin/
--- Subversion Repository: http://NightmareAdmin.googlecode.com/svn/
--- Dev Blog: http://NightmareAdmin.blogspot.com/
+
+
+
+
 -------------------------------------------------------------------------------------------------------------
 
 function Return_roRO()
   return {
-    ["slashcmds"] = { "/mangadmin", "/ma" },
+    ["slashcmds"] = { "/NightmareAdmin", "/na" },
     ["lang"] = "Romanian",
     ["realm"] = "|cFF00FF00Realm:|r "..GetCVar("realmName"),
     ["char"] = "|cFF00FF00Char:|r "..UnitName("player"),
@@ -40,14 +40,14 @@ function Return_roRO()
     ["tabmenu_Server"] = "Server",
     ["tabmenu_Log"] = "Istorie",
     ["tt_Default"] = "Misca cursorul deasupra unui element pentru a afla mai multe informatii!",
-    ["tt_MainButton"] = "Apasa aici pentru a activa Fereastra principala MangAdmin.",
+    ["tt_MainButton"] = "Apasa aici pentru a activa Fereastra principala NightmareAdmin.",
     ["tt_CharButton"] = "Apasa pentru a activa o fereastra cu diferite actiuni specifice caracterului.",
     ["tt_TeleButton"] = "Apasa pentru a activa o fereastra cu functii de teleportare.",
     ["tt_TicketButton"] = "Apasa pentru a activa o fereastra care arata toate ticketele si iti permite sa le administrezi.",
     ["tt_MiscButton"] = "Apasa pentru a activa o fereastra cu diferite optiuni.",
     ["tt_ServerButton"] = "Apasa acest buton pentru a arata anumite informatii si actiuni despre server.",
-    ["tt_LogButton"] = "Apasa acest buton pentru a arata arhiva cu actiunile desfasurate cu MangAdmin.",
-    ["tt_LanguageButton"] = "Apasa acest buton pentru a schimba limba si pentru a reincarca MangAdmin.",
+    ["tt_LogButton"] = "Apasa acest buton pentru a arata arhiva cu actiunile desfasurate cu NightmareAdmin.",
+    ["tt_LanguageButton"] = "Apasa acest buton pentru a schimba limba si pentru a reincarca NightmareAdmin.",
     ["tt_GMOnButton"] = "Apasa pentru a a activa Modul-GM.",
     ["tt_GMOffButton"] = "Apasa pentru a dezactiva Modul-GM.",
     ["tt_FlyOnButton"] = "Apasa pentru a activa modul Zburator al caracterului selectat.",
@@ -118,7 +118,7 @@ function Return_roRO()
     ["ma_TicketsNewNumber"] = "Ai tickete |cffeda55f%s|r noi!",
     ["ma_TicketsGoLast"] = "Dute la ultimul creator de ticket (%s).",
     ["ma_TicketsGetLast"] = "Bring %s to you.",
-    ["ma_IconHint"] = "|cffeda55fClick|r pentru a deschide MangAdmin. |cffeda55fShift-Click|r pentru a reincarca interfata. |cffeda55fAlt-Click|r pentru a reseta numarul de tickete.",
+    ["ma_IconHint"] = "|cffeda55fClick|r pentru a deschide NightmareAdmin. |cffeda55fShift-Click|r pentru a reincarca interfata. |cffeda55fAlt-Click|r pentru a reseta numarul de tickete.",
     ["ma_Reload"] = "Reincarca",
     ["ma_LoadMore"] = "Incarca mai mult...",
     ["ma_MailRecipient"] = "Recipient",

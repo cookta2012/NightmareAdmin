@@ -2048,7 +2048,7 @@ function ReturnAreaName(ZoneID)
     elseif ZoneID == "4290" then return "River's Heart"
     elseif ZoneID == "4291" then return "Rainspeaker Canopy"
     elseif ZoneID == "4292" then return "Frenzyheart Hill"
-    elseif ZoneID == "4293" then return "Wildgrowth Mangal"
+    elseif ZoneID == "4293" then return "Wildgrowth NAal"
     elseif ZoneID == "4294" then return "Heb'Valok"
     elseif ZoneID == "4295" then return "The Sundered Shard"
     elseif ZoneID == "4296" then return "The Lifeblood Pillar"

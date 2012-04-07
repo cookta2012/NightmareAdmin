@@ -1,7 +1,7 @@
 ﻿-------------------------------------------------------------------------------------------------------------
 --
--- NightmareAdmin Version 1.0
--- NightmareAdmin is a derivative of MangAdmin.
+-- NightmareAdmin
+
 --
 -- Copyright (C) 2007 Free Software Foundation, Inc.
 -- License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -12,14 +12,14 @@
 -- along with this program; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 --
--- Official Forums: http://groups.google.com/group/NightmareAdmin
--- GoogleCode Website: http://code.google.com/p/NightmareAdmin/
--- Subversion Repository: http://NightmareAdmin.googlecode.com/svn/
--- Dev Blog: http://NightmareAdmin.blogspot.com/
+
+
+
+
 -------------------------------------------------------------------------------------------------------------
 
 local genv = getfenv(0)
-local Mang = genv.Mang
+local NA = genv.NA
 GPS = '.gps'
 cWorking = 0
 cMap = 0
@@ -33,22 +33,22 @@ fID = 0
 gettingGOBinfo=0
 gettingGOBinfoinfo=0
 
-MAJOR_VERSION = "NightmareAdmin-3.3.5a"
+MAJOR_VERSION = "NightmareAdmin 3.3.5a"
 MINOR_VERSION = "1"
 ROOT_PATH     = "Interface\\AddOns\\NightmareAdmin\\"
 local cont = ""
 if not AceLibrary then error(MAJOR_VERSION .. " requires AceLibrary") end
 if not AceLibrary:IsNewVersion(MAJOR_VERSION, MINOR_VERSION) then return end
 
-MangAdmin    = AceLibrary("AceAddon-2.0"):new("AceConsole-2.0", "AceDB-2.0", "AceHook-2.1", "FuBarPlugin-2.0", "AceDebug-2.0", "AceEvent-2.0")
-Locale       = AceLibrary("AceLocale-2.2"):new("MangAdmin")
+NightmareAdmin    = AceLibrary("AceAddon-2.0"):new("AceConsole-2.0", "AceDB-2.0", "AceHook-2.1", "FuBarPlugin-2.0", "AceDebug-2.0", "AceEvent-2.0")
+Locale       = AceLibrary("AceLocale-2.2"):new("NightmareAdmin")
 Strings      = AceLibrary("AceLocale-2.2"):new("TEST")
 FrameLib     = AceLibrary("FrameLib-1.0")
 Graph        = AceLibrary("Graph-1.0")
 local Tablet = AceLibrary("Tablet-2.0")
 
-MangAdmin:RegisterDB("MangAdminDb", "MangAdminDbPerChar")
-MangAdmin:RegisterDefaults("char", 
+NightmareAdmin:RegisterDB("NightmareAdminDb", "NightmareAdminDbPerChar")
+NightmareAdmin:RegisterDefaults("char", 
   {
     functionQueue = {},
     requests = {
@@ -74,7 +74,7 @@ MangAdmin:RegisterDefaults("char",
     
   }
 )
-MangAdmin:RegisterDefaults("account", 
+NightmareAdmin:RegisterDefaults("account", 
   {
     language = nil,
     localesearchstring = true,
@@ -188,57 +188,57 @@ Strings:RegisterTranslations("itIT", function() return ReturnStrings_itIT() end)
 --Locale:Debug()
 --Locale:SetLocale("enUS")
 
-MangAdmin.consoleOpts = {
+NightmareAdmin.consoleOpts = {
   type = 'group',
   args = {
     toggle = {
       name = "toggle",
       desc = Locale["cmd_toggle"],
       type = 'execute',
-      func = function() MangAdmin:OnClick() end
+      func = function() NightmareAdmin:OnClick() end
     },
     transparency = {
       name = "transparency",
       desc = Locale["cmd_transparency"],
       type = 'execute',
-      func = function() MangAdmin:ToggleTransparency() end
+      func = function() NightmareAdmin:ToggleTransparency() end
     },
     tooltips = {
       name = "tooltips",
       desc = Locale["cmd_tooltip"],
       type = 'execute',
-      func = function() MangAdmin:ToggleTooltips() end
+      func = function() NightmareAdmin:ToggleTooltips() end
     },
     minimenu = {
       name = "tooltips",
       desc = "Toogle the toolbar/minimenu",
       type = 'execute',
-      func = function() MangAdmin:ToggleMinimenu() end
+      func = function() NightmareAdmin:ToggleMinimenu() end
     }
   }
 }
 
-function MangAdmin:OnInitialize()
-  -- initializing MangAdmin
+function NightmareAdmin:OnInitialize()
+  -- initializing NightmareAdmin
   self:SetLanguage()
   self:CreateFrames()
   self:RegisterChatCommand(Locale["slashcmds"], self.consoleOpts) -- this registers the chat commands
-  self:InitButtons()  -- this prepares the actions and tooltips of nearly all MangAdmin buttons  
+  self:InitButtons()  -- this prepares the actions and tooltips of nearly all NightmareAdmin buttons  
   InitControls()
   self:SearchReset()
-  MangAdmin.db.account.buffer.who = {}
+  NightmareAdmin.db.account.buffer.who = {}
   -- FuBar plugin config
-  MangAdmin.hasNoColor = true
-  MangAdmin.hasNoText = false
-  MangAdmin.clickableTooltip = true
-  MangAdmin.hasIcon = true
-  MangAdmin.hideWithoutStandby = true
-  MangAdmin:SetIcon(ROOT_PATH.."Textures\\icon.tga")
-  -- make MangAdmin frames closable with escape key
+  NightmareAdmin.hasNoColor = true
+  NightmareAdmin.hasNoText = false
+  NightmareAdmin.clickableTooltip = true
+  NightmareAdmin.hasIcon = true
+  NightmareAdmin.hideWithoutStandby = true
+  NightmareAdmin:SetIcon(ROOT_PATH.."Textures\\icon.tga")
+  -- make NightmareAdmin frames closable with escape key
   tinsert(UISpecialFrames,"ma_bgframe")
   tinsert(UISpecialFrames,"ma_popupframe")
   -- those all hook the AddMessage method of the chat frames.
-  -- They will be redirected to MangAdmin:AddMessage(...)
+  -- They will be redirected to NightmareAdmin:AddMessage(...)
   for i=1,NUM_CHAT_WINDOWS do
     local cf = getglobal("ChatFrame"..i)
     self:Hook(cf, "AddMessage", true)
@@ -251,12 +251,12 @@ function MangAdmin:OnInitialize()
   ma_gobmovedistforwardback:SetText("1")
   ma_gobmovedistleftright:SetText("1")
   ma_gobmovedistupdown:SetText("1")
-  MangAdmin.db.account.buffer.who = {}
+  NightmareAdmin.db.account.buffer.who = {}
   --clear color buffer
   self.db.account.style.color.buffer = {}
   --altering the function setitemref, to make it possible to click links
-  MangLinkifier_SetItemRef_Original = SetItemRef
-  SetItemRef = MangLinkifier_SetItemRef
+  NALinkifier_SetItemRef_Original = SetItemRef
+  SetItemRef = NALinkifier_SetItemRef
   self.db.char.msgDeltaTime = time()
   -- hide minimenu if not enabled
   if not self.db.account.style.showminimenu then
@@ -265,7 +265,7 @@ function MangAdmin:OnInitialize()
  
 end
 
-function MangAdmin:OnEnable()
+function NightmareAdmin:OnEnable()
   self:SetDebugging(true) -- to have debugging through the whole app
   ma_toptext:SetText(Locale["char"].." "..Locale["guid"]..tonumber(UnitGUID("player"),16))
   ma_top2text:SetText(Locale["realm"])
@@ -284,30 +284,30 @@ function MangAdmin:OnEnable()
 end
 
 --events
-function MangAdmin:PLAYER_DEAD()
+function NightmareAdmin:PLAYER_DEAD()
   ma_mm_revivebutton:Show()
 end
 
-function MangAdmin:PLAYER_ALIVE()
+function NightmareAdmin:PLAYER_ALIVE()
   ma_mm_revivebutton:Hide()
 end
 
-function MangAdmin:ZONE_CHANGED()
+function NightmareAdmin:ZONE_CHANGED()
   --[[if hastranslationlocale then
-    if not MangAdmin.db.char.selectedZone or MangAdmin.db.char.selectedZone ~= translate(GetZoneText()) then
+    if not NightmareAdmin.db.char.selectedZone or NightmareAdmin.db.char.selectedZone ~= translate(GetZoneText()) then
       if translationfor(GetZoneText()) then
-        MangAdmin.db.char.selectedZone = translate(GetZoneText())
+        NightmareAdmin.db.char.selectedZone = translate(GetZoneText())
         InlineScrollUpdate()
       end
     end
   end]]
 end
 
-function MangAdmin:UNIT_MODEL_CHANGED()
+function NightmareAdmin:UNIT_MODEL_CHANGED()
   ModelChanged()
 end
 
-function MangAdmin:PLAYER_TARGET_CHANGED()
+function NightmareAdmin:PLAYER_TARGET_CHANGED()
   ModelChanged()
   NpcModelChanged()
   if UnitIsPlayer("target") then
@@ -350,38 +350,38 @@ function MangAdmin:PLAYER_TARGET_CHANGED()
   end
 end
 
-function MangAdmin:OnDisable()
+function NightmareAdmin:OnDisable()
   -- called when the addon is disabled
   self:SearchReset()
 end
 
-function MangAdmin:OnClick()
-  -- this toggles the MangAdmin frame when clicking on the mini icon
+function NightmareAdmin:OnClick()
+  -- this toggles the NightmareAdmin frame when clicking on the mini icon
   if IsShiftKeyDown() then
     ReloadUI()
   elseif IsAltKeyDown() then
     self.db.char.newTicketQueue = 0
-    MangAdmin:UpdateTooltip()
+    NightmareAdmin:UpdateTooltip()
   elseif ma_bgframe:IsVisible() and not ma_popupframe:IsVisible() then
     FrameLib:HandleGroup("bg", function(frame) frame:Hide() end)
   elseif ma_bgframe:IsVisible() and ma_popupframe:IsVisible() then
     FrameLib:HandleGroup("bg", function(frame) frame:Hide() end)
     FrameLib:HandleGroup("popup", function(frame) frame:Hide() end)
   elseif not ma_bgframe:IsVisible() and ma_popupframe:IsVisible() then
-    FrameLib:HandleGroup("bg", function() MangAdmin:InstantGroupToggle("main") end)
+    FrameLib:HandleGroup("bg", function() NightmareAdmin:InstantGroupToggle("main") end)
   else
-    FrameLib:HandleGroup("bg", function() MangAdmin:InstantGroupToggle("main") end)
+    FrameLib:HandleGroup("bg", function() NightmareAdmin:InstantGroupToggle("main") end)
   end
 end
 
-function MangAdmin:OnTooltipUpdate()
+function NightmareAdmin:OnTooltipUpdate()
   local tickets = self.db.char.newTicketQueue
   local ticketCount = 0
   table.foreachi(tickets, function() ticketCount = ticketCount + 1 end)
   if ticketCount == 0 then
     local cat = Tablet:AddCategory("columns", 1)
     cat:AddLine("text", Locale["ma_TicketsNoNew"])
-    MangAdmin:SetIcon(ROOT_PATH.."Textures\\icon.tga")
+    NightmareAdmin:SetIcon(ROOT_PATH.."Textures\\icon.tga")
   else
     local cat = Tablet:AddCategory(
       "columns", 1,
@@ -394,7 +394,7 @@ function MangAdmin:OnTooltipUpdate()
     )
     cat:AddLine(
       "text", string.format(Locale["ma_TicketsNewNumber"], ticketCount),
-      "func", function() MangAdmin:ShowTicketTab() end)
+      "func", function() NightmareAdmin:ShowTicketTab() end)
     local counter = 0
     local name
     for i, name in pairs(tickets) do
@@ -402,22 +402,22 @@ function MangAdmin:OnTooltipUpdate()
       if counter == ticketCount then
         cat:AddLine(
           "text", string.format(Locale["ma_TicketsGoLast"], name),
-          "func", function(name) MangAdmin:TelePlayer("gochar", name) end,
+          "func", function(name) NightmareAdmin:TelePlayer("gochar", name) end,
           "arg1", name
         )
         cat:AddLine(
           "text", string.format(Locale["ma_TicketsGetLast"], name),
-          "func", function(name) MangAdmin:TelePlayer("getchar", name) end,
+          "func", function(name) NightmareAdmin:TelePlayer("getchar", name) end,
           "arg1", name
         )
       end
     end
-    MangAdmin:SetIcon(ROOT_PATH.."Textures\\icon2.tga")
+    NightmareAdmin:SetIcon(ROOT_PATH.."Textures\\icon2.tga")
   end
   Tablet:SetHint(Locale["ma_IconHint"])
 end
 
-function MangAdmin:ToggleTabButton(group)
+function NightmareAdmin:ToggleTabButton(group)
   --this modifies the look of tab buttons when clicked on them 
   FrameLib:HandleGroup("tabbuttons", 
   function(button) 
@@ -429,27 +429,27 @@ function MangAdmin:ToggleTabButton(group)
   end)
 end
 
-function MangAdmin:ToggleContentGroup(group)
-  --MangAdmin:LogAction("Toggled navigation point '"..group.."'.")
+function NightmareAdmin:ToggleContentGroup(group)
+  --NightmareAdmin:LogAction("Toggled navigation point '"..group.."'.")
   self:HideAllGroups()
   FrameLib:HandleGroup(group, function(frame) frame:Show() end)
 end
 
-function MangAdmin:InstantGroupToggle(group)
+function NightmareAdmin:InstantGroupToggle(group)
   if group == "ticket" then
     self.db.char.requests.ticket = false
   end
   if group== "who" then
-    MangAdmin:ChatMsg(".account onlinelist")
+    NightmareAdmin:ChatMsg(".account onlinelist")
     ResetWho()
   end
   FrameLib:HandleGroup("bg", function(frame) frame:Show() end)
-  MangAdmin:ToggleTabButton(group)
-  MangAdmin:ToggleContentGroup(group)
+  NightmareAdmin:ToggleTabButton(group)
+  NightmareAdmin:ToggleContentGroup(group)
 end
 
-function MangAdmin:TogglePopup(value, param)
-  -- this toggles the MangAdmin Search Popup frame, toggling deactivated, popup will be overwritten
+function NightmareAdmin:TogglePopup(value, param)
+  -- this toggles the NightmareAdmin Search Popup frame, toggling deactivated, popup will be overwritten
   --[[if ma_popupframe:IsVisible() then 
     FrameLib:HandleGroup("popup", function(frame) frame:Hide()  end)
   else]]
@@ -465,11 +465,11 @@ function MangAdmin:TogglePopup(value, param)
     ma_var2text:Hide()
     ma_searchbutton:SetScript("OnClick", function() self:SearchStart(param.type, ma_searcheditbox:GetText()) end)
     ma_searchbutton:SetText(Locale["ma_SearchButton"])
-    ma_resetsearchbutton:SetScript("OnClick", function() MangAdmin:SearchReset() end)
+    ma_resetsearchbutton:SetScript("OnClick", function() NightmareAdmin:SearchReset() end)
     ma_resetsearchbutton:SetText(Locale["ma_ResetButton"])
     ma_resetsearchbutton:Enable()
-    ma_ptabbutton_1:SetScript("OnClick", function() MangAdmin:TogglePopup("search", {type = param.type}) end)
-    ma_ptabbutton_2:SetScript("OnClick", function() MangAdmin:TogglePopup("favorites", {type = param.type}) end)
+    ma_ptabbutton_1:SetScript("OnClick", function() NightmareAdmin:TogglePopup("search", {type = param.type}) end)
+    ma_ptabbutton_2:SetScript("OnClick", function() NightmareAdmin:TogglePopup("favorites", {type = param.type}) end)
     ma_ptabbutton_2:Show()
     ma_selectallbutton:SetScript("OnClick", function() self:Favorites("select", param.type) end)
     ma_deselectallbutton:SetScript("OnClick", function() self:Favorites("deselect", param.type) end)
@@ -519,7 +519,7 @@ function MangAdmin:TogglePopup(value, param)
       ma_searchbutton:SetText(Locale["ma_Reload"])
       ma_searchbutton:SetScript("OnClick", function() self:LoadTickets() end)
       ma_resetsearchbutton:SetText(Locale["ma_LoadMore"])
-      ma_resetsearchbutton:SetScript("OnClick", function() MangAdmin.db.account.tickets.loading = true; self:LoadTickets(MangAdmin.db.account.tickets.count) end)]]--
+      ma_resetsearchbutton:SetScript("OnClick", function() NightmareAdmin.db.account.tickets.loading = true; self:LoadTickets(NightmareAdmin.db.account.tickets.count) end)]]--
     end
   elseif value == "favorites" then
     self:SearchReset()
@@ -540,8 +540,8 @@ function MangAdmin:TogglePopup(value, param)
     ma_lookupresulttext:Show()
     ma_resetsearchbutton:Hide()
     ma_PopupScrollBar:Hide()
-    ma_searcheditbox:SetScript("OnTextChanged", function() MangAdmin:UpdateMailBytesLeft() end)
-    ma_var1editbox:SetScript("OnTextChanged", function() MangAdmin:UpdateMailBytesLeft() end)
+    ma_searcheditbox:SetScript("OnTextChanged", function() NightmareAdmin:UpdateMailBytesLeft() end)
+    ma_var1editbox:SetScript("OnTextChanged", function() NightmareAdmin:UpdateMailBytesLeft() end)
     ma_modfavsbutton:Hide()
     ma_selectallbutton:Hide()
     ma_deselectallbutton:Hide()
@@ -573,7 +573,7 @@ function MangAdmin:TogglePopup(value, param)
   end
 end
 
-function MangAdmin:HideAllGroups()
+function NightmareAdmin:HideAllGroups()
   FrameLib:HandleGroup("main", function(frame) frame:Hide() end)
   FrameLib:HandleGroup("char", function(frame) frame:Hide() end)
   FrameLib:HandleGroup("char2", function(frame) frame:Hide() end)
@@ -601,7 +601,7 @@ end
    end
 end
 
-function MangAdmin:TicketHackTimer()
+function NightmareAdmin:TicketHackTimer()
   if self.db.char.requests.ticket then
     if (time() - self.db.char.msgDeltaTime) > 0 then
       self.db.char.requests.ticketbody = 0
@@ -615,10 +615,10 @@ function MangAdmin:TicketHackTimer()
   end
 end]]
 
-function MangAdmin:AddMessage(frame, text, r, g, b, id)
+function NightmareAdmin:AddMessage(frame, text, r, g, b, id)
   -- frame is the object that was hooked (one of the ChatFrames)  
   local catchedSth = false
-  local output = MangAdmin.db.account.style.showchat
+  local output = NightmareAdmin.db.account.style.showchat
   if id == 1 then --make sure that the message comes from the server, message id = 1
     --Catches if Toggle is still on for some reason, but search frame is not up, and disables it so messages arent caught
     if self.db.char.requests.toggle and not ma_popupframe:IsVisible() then
@@ -721,15 +721,15 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
       end
     end
 
-    if MangAdmin:ID_Setting_Start_Read() then    
+    if NightmareAdmin:ID_Setting_Start_Read() then    
         local b1,e1,pattern = string.find(text, "GUID: (%d+)%.")
         --local b1,e1,pattern = string.find(text, "GUID:")
         if b1 then
             b1,e1,pattern = string.find(text, "([0-9]+)")
             if b1 then
-                MangAdmin:ID_Setting_Start_Write(0)
+                NightmareAdmin:ID_Setting_Start_Write(0)
                 
-                MangAdmin:ID_Setting_Write(0,pattern)
+                NightmareAdmin:ID_Setting_Write(0,pattern)
                 ma_NPC_guidbutton:SetText(pattern)
                 self:LogAction("NPC_GUID_Get id "..pattern..".")
             end	
@@ -741,7 +741,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             b1,e1,pattern = string.find(text, "([0-9]+)")
             if b1 then
                 
-                MangAdmin:ID_Setting_Write(1,pattern)
+                NightmareAdmin:ID_Setting_Write(1,pattern)
                 ma_NPC_idbutton:SetText(pattern)
                 self:LogAction("NPC_EntryID_Get id "..pattern..".")
             end	
@@ -753,7 +753,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             b1,e1,pattern = string.find(text, "([0-9]+)")
             if b1 then
                 
-                --MangAdmin:ID_Setting_Write(1,pattern)
+                --NightmareAdmin:ID_Setting_Write(1,pattern)
                 ma_npcdisplayid:SetText(pattern)
                 self:LogAction("NPC_DisplayID_Get id "..pattern..".")
             end	
@@ -762,15 +762,15 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
     
     end
 
-    if MangAdmin:OID_Setting_Start_Read() then    
+    if NightmareAdmin:OID_Setting_Start_Read() then    
         local b1,e1,pattern = string.find(text, "GUID: (%d+) ")
         --local b1,e1,pattern = string.find(text, "GUID:")
         if b1 then
             b1,e1,pattern = string.find(text, "([0-9]+)")
             if b1 then
-                MangAdmin:OID_Setting_Start_Write(0)
+                NightmareAdmin:OID_Setting_Start_Write(0)
                 
-                MangAdmin:OID_Setting_Write(0,pattern)
+                NightmareAdmin:OID_Setting_Write(0,pattern)
                 ma_Obj_guidbutton:SetText(pattern)
                 self:LogAction("OBJECT_GUID_Get id "..pattern..".")
             end	
@@ -785,7 +785,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             b1,e1,pattern = string.find(xpattern, "([0-9]+)")
             if b1 then
                 
-    --      		MangAdmin:OID_Setting_Write(1,pattern)
+    --      		NightmareAdmin:OID_Setting_Write(1,pattern)
                 ma_Obj_idbutton:SetText(pattern)
                 self:LogAction("OBJECT_EntryID_Get id "..pattern..".")
                 
@@ -800,7 +800,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             b1,e1,pattern = string.find(xpattern, "([0-9]+)")
             if b1 then
                 
-    --      		MangAdmin:OID_Setting_Write(1,pattern)
+    --      		NightmareAdmin:OID_Setting_Write(1,pattern)
     --      		ma_Obj_idbutton:SetText(pattern)
                 ma_gobdisplayid:SetText(pattern)
                 self:LogAction("OBJECT DisplayID"..pattern..".")
@@ -811,10 +811,10 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
     
     end
 
-    if MangAdmin:Way_Point_Add_Start_Read() then    
+    if NightmareAdmin:Way_Point_Add_Start_Read() then    
         b1,e1,pattern = string.find(text, "Waypoint (%d+)")
         if b1 then
-            MangAdmin:Way_Point_Add_Start_Write(0)
+            NightmareAdmin:Way_Point_Add_Start_Write(0)
             
             local wnpc =	ma_NPC_guidbutton:GetText()
             self:ChatMsg(".wp show on "..wnpc)
@@ -838,7 +838,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             end
             PopupScrollUpdate()
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat  
+            output = NightmareAdmin.db.account.style.showchat  
         end
       elseif self.db.char.requests.itemset then
         -- hook all itemset lookups
@@ -846,7 +846,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             table.insert(self.db.account.buffer.itemsets, {isId = id, isName = name, checked = false})
             PopupScrollUpdate()
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
         end
       elseif self.db.char.requests.spell then
         -- hook all spell lookups
@@ -854,7 +854,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             table.insert(self.db.account.buffer.spells, {spId = id, spName = name, checked = false})
             PopupScrollUpdate()
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
         end
       elseif self.db.char.requests.skill then
         -- hook all skill lookups
@@ -862,7 +862,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             table.insert(self.db.account.buffer.skills, {skId = id, skName = name, checked = false})
             PopupScrollUpdate()
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
         end
       elseif self.db.char.requests.creature then
         -- hook all creature lookups
@@ -870,7 +870,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             table.insert(self.db.account.buffer.creatures, {crId = id, crName = name, checked = false})
             PopupScrollUpdate()
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
         end
       elseif self.db.char.requests.object then
         -- hook all object lookups
@@ -878,7 +878,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             table.insert(self.db.account.buffer.objects, {objId = id, objName = name, checked = false})
             PopupScrollUpdate()
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
         end
       elseif self.db.char.requests.quest then
         -- hook all quest lookups
@@ -886,7 +886,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             table.insert(self.db.account.buffer.quests, {qsId = id, qsName = name, checked = false})
             PopupScrollUpdate()
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
         end
       elseif self.db.char.requests.tele then
         -- hook all tele lookups
@@ -894,20 +894,20 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
             table.insert(self.db.account.buffer.teles, {tName = name, checked = false})
             PopupScrollUpdate()
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
         end
         --this is to hide the message shown before the teles
         if string.gmatch(text, Strings["ma_GmatchTeleFound"]) then
           catchedSth = true
-          output = MangAdmin.db.account.style.showchat
+          output = NightmareAdmin.db.account.style.showchat
         end
       end
     end
     for diff in string.gmatch(text, Strings["ma_GmatchUpdateDiff"]) do
         ma_difftext:SetText(diff)
         catchedSth = true
---        output = MangAdmin.db.account.style.showchat
-        output = MangAdmin.db.account.style.showchat  
+--        output = NightmareAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat  
     end
 
     -- hook all new tickets
@@ -927,7 +927,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
         --table.insert(self.db.account.buffer.tpinfo, {char = {pStatus = status, pGuid = guid, pAcc = account, pId = id, pLevel = level, pIp = ip}})
         ma_tpinfo_text:SetText(ma_tpinfo_text:GetText()..Locale["ma_TicketsInfoPlayer"]..char.." ("..guid..")\n"..Locale["ma_TicketsInfoStatus"]..status.."\n"..Locale["ma_TicketsInfoAccount"]..account.." ("..id..")\n"..Locale["ma_TicketsInfoAccLevel"]..level.."\n"..Locale["ma_TicketsInfoLastIP"]..ip.."\n"..Locale["ma_TicketsInfoLatency"]..latency)
         catchedSth = true
-        output = MangAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat
       end
     end
     
@@ -936,7 +936,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
       if self.db.char.requests.tpinfo then
         ma_tpinfo_text:SetText(ma_tpinfo_text:GetText().."\n"..Locale["ma_TicketsInfoPlayedTime"]..played.."\n"..Locale["ma_TicketsInfoLevel"]..level.."\n"..Locale["ma_TicketsInfoMoney"]..money)
         catchedSth = true
-        output = MangAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat
         self.db.char.requests.tpinfo = false
       end
     end
@@ -946,79 +946,79 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
       ma_inforevisiontext:SetText(Locale["info_revision"]..revision)
       --ma_infoplatformtext:SetText(Locale["info_platform"]..platform)
         catchedSth = true
---        output = MangAdmin.db.account.style.showchat
-        output = MangAdmin.db.account.style.showchat  
+--        output = NightmareAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat  
     end
     for users, maxusers in string.gmatch(text, Strings["ma_GmatchOnlinePlayers"]) do
       ma_infoonlinetext:SetText(Locale["info_online"]..users)
       ma_infomaxonlinetext:SetText(Locale["info_maxonline"]..maxusers)
         catchedSth = true
---        output = MangAdmin.db.account.style.showchat
-        output = MangAdmin.db.account.style.showchat  
+--        output = NightmareAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat  
     end
     for uptime in string.gmatch(text, Strings["ma_GmatchUptime"]) do
       ma_infouptimetext:SetText(Locale["info_uptime"]..uptime)
         catchedSth = true
---        output = MangAdmin.db.account.style.showchat
-        output = MangAdmin.db.account.style.showchat  
+--        output = NightmareAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat  
     end
     for match in string.gmatch(text, Strings["ma_GmatchActiveConnections"]) do
         catchedSth = true
---        output = MangAdmin.db.account.style.showchat
-        output = MangAdmin.db.account.style.showchat  
+--        output = NightmareAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat  
     
     end
     -- get results of ticket list. In Trinity, everything will be constructed off the list
     for id, char, create, update in string.gmatch(text, Strings["ma_GmatchTickets"]) do
-        table.insert(MangAdmin.db.account.buffer.tickets, {tNumber = id, tChar = char, tLCreate = create, tLUpdate = update, tMsg = ""})
+        table.insert(NightmareAdmin.db.account.buffer.tickets, {tNumber = id, tChar = char, tLCreate = create, tLUpdate = update, tMsg = ""})
         local ticketCount = 0
-        table.foreachi(MangAdmin.db.account.buffer.tickets, function() ticketCount = ticketCount + 1 end)
+        table.foreachi(NightmareAdmin.db.account.buffer.tickets, function() ticketCount = ticketCount + 1 end)
         ticketCount = 0
         catchedSth = true
-        output = MangAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat
         self.db.char.requests.ticketbody = id
         self.db.char.msgDeltaTime = time()
     end
 
     for msg in string.gmatch(text, "Ticket Message.-:.-(.*)") do
-        MangAdmin.db.account.buffer.ticketread=true
-        MangAdmin.db.account.buffer.ticketsfull = {}
-        table.remove(MangAdmin.db.account.buffer.ticketsfull, 1)
-        --table.insert(MangAdmin.db.account.buffer.ticketsfull, {tMsg = msg})
-        table.insert(MangAdmin.db.account.buffer.ticketsfull, {tMsg = " "})
+        NightmareAdmin.db.account.buffer.ticketread=true
+        NightmareAdmin.db.account.buffer.ticketsfull = {}
+        table.remove(NightmareAdmin.db.account.buffer.ticketsfull, 1)
+        --table.insert(NightmareAdmin.db.account.buffer.ticketsfull, {tMsg = msg})
+        table.insert(NightmareAdmin.db.account.buffer.ticketsfull, {tMsg = " "})
         ma_ticketdetail:SetText("|cffffffff"..msg)
         catchedSth = true
-        output = MangAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat
     end       
 
-    if MangAdmin.db.account.buffer.ticketread==true then
+    if NightmareAdmin.db.account.buffer.ticketread==true then
         for msg in string.gmatch(text, "(.*)]|r") do
-            local object = MangAdmin.db.account.buffer.ticketsfull[1]
+            local object = NightmareAdmin.db.account.buffer.ticketsfull[1]
             local t_msg = ""
             t_msg = object["tMsg"]
             t_msg = t_msg.." ".."|cffffffff"..msg
-            table.remove(MangAdmin.db.account.buffer.ticketsfull, 1)
-            table.insert(MangAdmin.db.account.buffer.ticketsfull, {tMsg = t_msg})
-            MangAdmin.db.account.buffer.ticketread=false
+            table.remove(NightmareAdmin.db.account.buffer.ticketsfull, 1)
+            table.insert(NightmareAdmin.db.account.buffer.ticketsfull, {tMsg = t_msg})
+            NightmareAdmin.db.account.buffer.ticketread=false
             ma_ticketdetail:SetText("|cffffffff"..t_msg)
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
         end
         for msg in string.gmatch(text, "(.*)") do
-            local object = MangAdmin.db.account.buffer.ticketsfull[1]
+            local object = NightmareAdmin.db.account.buffer.ticketsfull[1]
             local t_msg = "" 
             t_msg = object["tMsg"]
             t_msg = t_msg.." ".."|cffffffff"..msg
-            table.remove(MangAdmin.db.account.buffer.ticketsfull, 1)
-            table.insert(MangAdmin.db.account.buffer.ticketsfull, {tMsg = t_msg})
+            table.remove(NightmareAdmin.db.account.buffer.ticketsfull, 1)
+            table.insert(NightmareAdmin.db.account.buffer.ticketsfull, {tMsg = t_msg})
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
         end
     end
 
     for eraseme in string.gmatch(text, "Showing list of open tickets") do
         catchedSth = true
-        output = MangAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat
         
     end
     
@@ -1034,10 +1034,10 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
         --self:ChatMsg("Matched Who")
         if acc == "Account" then
         else
-            table.insert(MangAdmin.db.account.buffer.who, {tAcc = acc, tChar = char, tIP = ip, tMap = map, tZone = zone, tExp = exp, tGMLevel = gmlevel})
+            table.insert(NightmareAdmin.db.account.buffer.who, {tAcc = acc, tChar = char, tIP = ip, tMap = map, tZone = zone, tExp = exp, tGMLevel = gmlevel})
         end
             catchedSth = true
-            output = MangAdmin.db.account.style.showchat
+            output = NightmareAdmin.db.account.style.showchat
             WhoUpdate()
     end
 --    ["ma_GmatchAccountInfo"] = "Player(.*) %(guid: (%d+)%) Account: (.*) %(id: (%d+)%) Email: (.*) GMLevel: (%d+) Last IP: (.*) Last login: (.*) Latency: (%d+)ms",
@@ -1045,22 +1045,22 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
     for charname, charguid, account, accountid, email, gmlvl, lastip, lastlogin, latency in string.gmatch(text, Strings["ma_GmatchAccountInfo"]) do
        ma_whodetail:SetText("|c00ff00ffCharacter:|r"..charname.." |cffffffff("..charguid..")|r\n".."|c00ff0000Acct:|r|cffffffff"..account.." ("..accountid..")|r\n".."|c00ff0000IP:|r|cffffffff"..lastip.."|r\n".."|c00ff0000Login:|r|cffffffff"..lastlogin.."|r\n".."|c00ff0000Latency:|r|cffffffff"..latency.."ms|r\n")  
        catchedSth = true
-       output = MangAdmin.db.account.style.showchat
+       output = NightmareAdmin.db.account.style.showchat
     end
     
     for race, class, playedtime, level, money in string.gmatch(text, Strings["ma_GmatchAccountInfo2"]) do
         --self:ChatMsg("Matched Who")
        ma_whodetail2:SetText("|c00ff0000Race:|r|cffffffff"..race.."|r\n".."|c00ff0000Class|r|cffffffff"..class.."|r\n".."|c00ff0000Level:|r|cffffffff"..level.."|r\n".."|c00ff0000Money:|r|cffffffff"..money.."|r\n".."|c00ff0000Played Time:|r|cffffffff"..playedtime.."|r\n")  
        catchedSth = true
-       output = MangAdmin.db.account.style.showchat
+       output = NightmareAdmin.db.account.style.showchat
     end
     for mymatch in string.gmatch(text, "=====") do
         catchedSth = true
-        output = MangAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat
     end
     for mymatch in string.gmatch(text, "Characters Online:") do
         catchedSth = true
-        output = MangAdmin.db.account.style.showchat
+        output = NightmareAdmin.db.account.style.showchat
     end
  --[[   
     -- get ticket content
@@ -1072,7 +1072,7 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
           if not catchedSth then
             --self:LogAction(text)
             local ticketCount = 0
-            table.foreachi(MangAdmin.db.account.buffer.tickets, function() ticketCount = ticketCount + 1 end)
+            table.foreachi(NightmareAdmin.db.account.buffer.tickets, function() ticketCount = ticketCount + 1 end)
             --self:LogAction("Prepare to add text to DB ticket: "..ticketCount)
             for k,v in ipairs(self.db.account.buffer.tickets) do
               if k == ticketCount then
@@ -1096,23 +1096,23 @@ function MangAdmin:AddMessage(frame, text, r, g, b, id)
       if output == false then
         -- don't output anything
       elseif output == true then
-        text = MangLinkifier_Decompose(text)
+        text = NALinkifier_Decompose(text)
         self.hooks[frame].AddMessage(frame, text, r, g, b, id)
       end
     else
-      text = MangLinkifier_Decompose(text)
+      text = NALinkifier_Decompose(text)
       self.hooks[frame].AddMessage(frame, text, r, g, b, id)
     end
   else
     -- message is not from server
     --Linkifier should be used on non server messages as well to catch links suc as items in chat
-    text = MangLinkifier_Decompose(text)
+    text = NALinkifier_Decompose(text)
     -- Returns the message to the client, or else the chat frame never shows it
     self.hooks[frame].AddMessage(frame, text, r, g, b, id)
   end
 end
 
---[[ function MangAdmin:GetValueCallHandler(guid, field, value)
+--[[ function NightmareAdmin:GetValueCallHandler(guid, field, value)
   -- checks for specific actions and calls functions by checking the function-order
   local called = self.db.char.getValueCallHandler.calledGetGuid
   local realGuid = self.db.char.getValueCallHandler.realGuid
@@ -1126,17 +1126,17 @@ end
   elseif guid == realGuid then
     return true
   else
-    MangAdmin:LogAction("DEBUG: Getvalues are: GUID = "..guid.."; field = "..field.."; value = "..value..";")
+    NightmareAdmin:LogAction("DEBUG: Getvalues are: GUID = "..guid.."; field = "..field.."; value = "..value..";")
     return true
   end
 end ]]
 
-function MangAdmin:LogAction(msg)
+function NightmareAdmin:LogAction(msg)
   ma_logframe:AddMessage("|cFF00FF00["..date("%H:%M:%S").."]|r "..msg, 1.0, 1.0, 0.0)
 end
 
 
-function MangAdmin:ChatMsg(msg, msgt, recipient)
+function NightmareAdmin:ChatMsg(msg, msgt, recipient)
   if not msgt then local msgt = "say" end
   if msgt == "addon" then
     if recipient then
@@ -1153,7 +1153,7 @@ function MangAdmin:ChatMsg(msg, msgt, recipient)
   end
 end
 
-function MangAdmin:Selection(selection)
+function NightmareAdmin:Selection(selection)
   if selection == "player" then
     if UnitIsPlayer("target") then
       return true
@@ -1172,15 +1172,15 @@ function MangAdmin:Selection(selection)
   end
 end
 
-function MangAdmin:AndBit(value, test) 
+function NightmareAdmin:AndBit(value, test) 
   return mod(value, test*2) >= test 
 end
 
 
 --=================================--
---MangAdmin Commands functions--
+--NightmareAdmin Commands functions--
 --=================================--
-function MangAdmin:SetLanguage()
+function NightmareAdmin:SetLanguage()
     if self.db.account.language then
     Locale:SetLocale(self.db.account.language)
     if self.db.account.localesearchstring then
@@ -1193,13 +1193,13 @@ function MangAdmin:SetLanguage()
   end
 end
 
-function MangAdmin:ChangeLanguage(locale)
+function NightmareAdmin:ChangeLanguage(locale)
   self.db.account.localesearchstring = ma_checklocalsearchstringsbutton:GetChecked()
   self.db.account.language = locale
   ReloadUI()
 end
 
-function MangAdmin:SetSkill(value, skill, maxskill)
+function NightmareAdmin:SetSkill(value, skill, maxskill)
   if self:Selection("player") or self:Selection("self") or self:Selection("none") then
     local player = UnitName("target") or UnitName("player")
     local class = UnitClass("target") or UnitClass("player")
@@ -1229,7 +1229,7 @@ function MangAdmin:SetSkill(value, skill, maxskill)
   end
 end
 
-function MangAdmin:Quest(value, state)
+function NightmareAdmin:Quest(value, state)
   if self:Selection("player") or self:Selection("self") or self:Selection("none") then
     local player = UnitName("target") or UnitName("player")
     local class = UnitClass("target") or UnitClass("player")
@@ -1258,7 +1258,7 @@ function MangAdmin:Quest(value, state)
   end
 end
 
-function MangAdmin:Creature(value, state)
+function NightmareAdmin:Creature(value, state)
     local command = ".npc add"
     local logcmd = "Spawned"
     if state == "RightButton" then
@@ -1280,7 +1280,7 @@ function MangAdmin:Creature(value, state)
 
 end
 
-function MangAdmin:AddItem(value, state)
+function NightmareAdmin:AddItem(value, state)
   if self:Selection("player") or self:Selection("self") or self:Selection("none") then
     local player = UnitName("target") or UnitName("player")
     local amount = ma_var1editbox:GetText()
@@ -1315,7 +1315,7 @@ function MangAdmin:AddItem(value, state)
   end
 end
 
-function MangAdmin:AddItemSet(value)
+function NightmareAdmin:AddItemSet(value)
   if self:Selection("player") or self:Selection("self") or self:Selection("none") then
     local player = UnitName("target") or UnitName("player")
     self:ChatMsg(".additemset "..value)
@@ -1325,7 +1325,7 @@ function MangAdmin:AddItemSet(value)
   end
 end
 
-function MangAdmin:AddObject(value, state)
+function NightmareAdmin:AddObject(value, state)
   local loot = ma_var1editbox:GetText()
   local _time = ma_var2editbox:GetText()
   if state == "RightButton" then
@@ -1345,7 +1345,7 @@ function MangAdmin:AddObject(value, state)
   end
 end
 
-function MangAdmin:TelePlayer(value, player)
+function NightmareAdmin:TelePlayer(value, player)
   if value == "gochar" then
     self:ChatMsg(".appear "..player)
     self:LogAction("Teleported to player "..player..".")
@@ -1355,105 +1355,105 @@ function MangAdmin:TelePlayer(value, player)
   end
 end
 
-local mang_Waypoint_start = 0
-local mang_ID_start = 0
-local mang_ID_guid = ""
-local mang_ID_entryid = ""
-local mang_OID_start = 0
-local mang_OID_guid = ""
-local mang_OID_entryid = ""
+local NA_Waypoint_start = 0
+local NA_ID_start = 0
+local NA_ID_guid = ""
+local NA_ID_entryid = ""
+local NA_OID_start = 0
+local NA_OID_guid = ""
+local NA_OID_entryid = ""
 
-function MangAdmin:Way_Point_Add_Start_Write(num)
+function NightmareAdmin:Way_Point_Add_Start_Write(num)
 
-    mang_Waypoint_start = num
-
-end
-
-function MangAdmin:Way_Point_Add_Start_Read()
-
-    return mang_Waypoint_start
+    NA_Waypoint_start = num
 
 end
 
-function MangAdmin:ID_Setting_Start_Write(num)
+function NightmareAdmin:Way_Point_Add_Start_Read()
+
+    return NA_Waypoint_start
+
+end
+
+function NightmareAdmin:ID_Setting_Start_Write(num)
     
-    mang_ID_start = num
+    NA_ID_start = num
 
 end    
 
-function MangAdmin:ID_Setting_Start_Read()
+function NightmareAdmin:ID_Setting_Start_Read()
     
-    return mang_ID_start
+    return NA_ID_start
 
 end    
 
-function MangAdmin:ID_Setting_Write(num,val)
+function NightmareAdmin:ID_Setting_Write(num,val)
     
     if num == 0 then
     -- GUID
-    	mang_ID_guid = val
+    	NA_ID_guid = val
     elseif num == 1 then
     -- ID
-    	mang_ID_entryid = val
+    	NA_ID_entryid = val
     end
 
 end    
 
-function MangAdmin:ID_Setting_Read(num)
+function NightmareAdmin:ID_Setting_Read(num)
            
 local val = "" 
            
     if num == 0 then
     -- GUID
-    	val = mang_ID_guid
+    	val = NA_ID_guid
     elseif num == 1 then
     -- ID
-    	val = mang_ID_entryid
+    	val = NA_ID_entryid
     end
     
     return val
 end    
 
-function MangAdmin:OID_Setting_Start_Write(num)
+function NightmareAdmin:OID_Setting_Start_Write(num)
     
-    mang_OID_start = num
+    NA_OID_start = num
 
 end    
 
-function MangAdmin:OID_Setting_Start_Read()
+function NightmareAdmin:OID_Setting_Start_Read()
     
-    return mang_OID_start
+    return NA_OID_start
 
 end    
 
-function MangAdmin:OID_Setting_Write(num,val)
+function NightmareAdmin:OID_Setting_Write(num,val)
     
     if num == 0 then
     -- GUID
-    	mang_OID_guid = val
+    	NA_OID_guid = val
     elseif num == 1 then
     -- ID
-    	mang_OID_entryid = val
+    	NA_OID_entryid = val
     end
 
 end    
 
-function MangAdmin:OID_Setting_Read(num)
+function NightmareAdmin:OID_Setting_Read(num)
            
 local val = "" 
            
     if num == 0 then
     -- GUID
-    	val = mang_OID_guid
+    	val = NA_OID_guid
     elseif num == 1 then
     -- ID
-    	val = mang_OID_entryid
+    	val = NA_OID_entryid
     end
     
     return val
 end    
 
-function MangAdmin:NPCAdd_Way_o()                            
+function NightmareAdmin:NPCAdd_Way_o()                            
     local player = UnitName("target") or UnitName("player")
     local npc =	ma_NPC_guidbutton:GetText()
     self:ChatMsg(".wp add "..npc)
@@ -1461,13 +1461,13 @@ function MangAdmin:NPCAdd_Way_o()
     self:LogAction("WayPoint Add for player "..player..".")
 end
 
-function MangAdmin:WayModify()
+function NightmareAdmin:WayModify()
     local player = UnitName("target") or UnitName("player")
     self:ChatMsg(".npc info")
     self:LogAction("Got NPC info for player "..player..".")
 end
 
-function MangAdmin:NPC_GUID_Get_org()                            
+function NightmareAdmin:NPC_GUID_Get_org()                            
     local player = UnitName("target") or UnitName("player") 
     
     --local val1 = UnitGUID("target")                     
@@ -1489,12 +1489,12 @@ function MangAdmin:NPC_GUID_Get_org()
 end
 
 
-function MangAdmin:CreateGuild(leader, name)
+function NightmareAdmin:CreateGuild(leader, name)
   self:ChatMsg(".guild create "..leader.." "..name)
   self:LogAction("Created guild '"..name.."' with leader "..leader..".")
 end
 
-function MangAdmin:SendMail(recipient, subject, body)
+function NightmareAdmin:SendMail(recipient, subject, body)
   recipient = string.gsub(recipient, " ", "")
   subject = string.gsub(subject, " ", "")
   body = string.gsub(body, "\n", " ")
@@ -1508,7 +1508,7 @@ end
 
 
 
-function MangAdmin:UpdateMailBytesLeft()
+function NightmareAdmin:UpdateMailBytesLeft()
   local bleft = 246 - strlen(ma_searcheditbox:GetText()) - strlen(ma_var1editbox:GetText()) - strlen(ma_maileditbox:GetText())
   if bleft >= 0 then
     ma_lookupresulttext:SetText(Locale["ma_MailBytesLeft"].."|cff00ff00"..bleft.."|r")
@@ -1523,7 +1523,7 @@ end
 
 
 
-function MangAdmin:Favorites(value, searchtype)
+function NightmareAdmin:Favorites(value, searchtype)
   if value == "add" then
     if searchtype == "item" then
       table.foreachi(self.db.account.buffer.items, function(k,v) if v["checked"] then table.insert(self.db.account.favorites.items, {itId = v["itId"], itName = v["itName"], checked = false}) end end)
@@ -1604,51 +1604,51 @@ function MangAdmin:Favorites(value, searchtype)
       selected = false
     end
     if searchtype == "item" then
-      if MangAdmin.db.char.requests.item then
+      if NightmareAdmin.db.char.requests.item then
         table.foreachi(self.db.account.buffer.items, function(k,v) self.db.account.buffer.items[k].checked = selected end)
-      elseif MangAdmin.db.char.requests.favitem then
+      elseif NightmareAdmin.db.char.requests.favitem then
         table.foreachi(self.db.account.favorites.items, function(k,v) self.db.account.favorites.items[k].checked = selected end)
       end
     elseif searchtype == "itemset" then
-      if MangAdmin.db.char.requests.itemset then
+      if NightmareAdmin.db.char.requests.itemset then
         table.foreachi(self.db.account.buffer.itemsets, function(k,v) self.db.account.buffer.itemsets[k].checked = selected end)
-      elseif MangAdmin.db.char.requests.favitemset then
+      elseif NightmareAdmin.db.char.requests.favitemset then
         table.foreachi(self.db.account.favorites.itemsets, function(k,v) self.db.account.favorites.itemsets[k].checked = selected end)
       end
     elseif searchtype == "spell" then
-      if MangAdmin.db.char.requests.spell then
+      if NightmareAdmin.db.char.requests.spell then
         table.foreachi(self.db.account.buffer.spells, function(k,v) self.db.account.buffer.spells[k].checked = selected end)
-      elseif MangAdmin.db.char.requests.favspell then
+      elseif NightmareAdmin.db.char.requests.favspell then
         table.foreachi(self.db.account.favorites.spells, function(k,v) self.db.account.favorites.spells[k].checked = selected end)
       end
     elseif searchtype == "skill" then
-      if MangAdmin.db.char.requests.skill then
+      if NightmareAdmin.db.char.requests.skill then
         table.foreachi(self.db.account.buffer.skills, function(k,v) self.db.account.buffer.skills[k].checked = selected end)
-      elseif MangAdmin.db.char.requests.favskill then
+      elseif NightmareAdmin.db.char.requests.favskill then
         table.foreachi(self.db.account.favorites.skills, function(k,v) self.db.account.favorites.skills[k].checked = selected end)
       end
     elseif searchtype == "quest" then
-      if MangAdmin.db.char.requests.quest then
+      if NightmareAdmin.db.char.requests.quest then
         table.foreachi(self.db.account.buffer.quests, function(k,v) self.db.account.buffer.quests[k].checked = selected end)
-      elseif MangAdmin.db.char.requests.favquest then
+      elseif NightmareAdmin.db.char.requests.favquest then
         table.foreachi(self.db.account.favorites.quests, function(k,v) self.db.account.favorites.quests[k].checked = selected end)
       end
     elseif searchtype == "creature" then
-      if MangAdmin.db.char.requests.creature then
+      if NightmareAdmin.db.char.requests.creature then
         table.foreachi(self.db.account.buffer.creatures, function(k,v) self.db.account.buffer.creatures[k].checked = selected end)
-      elseif MangAdmin.db.char.requests.favcreature then
+      elseif NightmareAdmin.db.char.requests.favcreature then
         table.foreachi(self.db.account.favorites.creatures, function(k,v) self.db.account.favorites.creatures[k].checked = selected end)
       end
     elseif searchtype == "object" then
-      if MangAdmin.db.char.requests.object then
+      if NightmareAdmin.db.char.requests.object then
         table.foreachi(self.db.account.buffer.objects, function(k,v) self.db.account.buffer.objects[k].checked = selected end)
-      elseif MangAdmin.db.char.requests.favobject then
+      elseif NightmareAdmin.db.char.requests.favobject then
         table.foreachi(self.db.account.favorites.objects, function(k,v) self.db.account.favorites.objects[k].checked = selected end)
       end
     elseif searchtype == "tele" then
-      if MangAdmin.db.char.requests.tele then
+      if NightmareAdmin.db.char.requests.tele then
         table.foreachi(self.db.account.buffer.teles, function(k,v) self.db.account.buffer.teles[k].checked = selected end)
-      elseif MangAdmin.db.char.requests.favtele then
+      elseif NightmareAdmin.db.char.requests.favtele then
         table.foreachi(self.db.account.favorites.teles, function(k,v) self.db.account.favorites.teles[k].checked = selected end)
       end
     end
@@ -1656,7 +1656,7 @@ function MangAdmin:Favorites(value, searchtype)
   end
 end
 
-function MangAdmin:SearchStart(var, value)
+function NightmareAdmin:SearchStart(var, value)
   self.db.char.requests.toggle = true
   if var == "item" then
     self.db.char.requests.item = true
@@ -1695,7 +1695,7 @@ function MangAdmin:SearchStart(var, value)
   self:LogAction("Searching for "..var.."s with the keyword '"..value.."'.")
 end
 
-function MangAdmin:SearchReset()
+function NightmareAdmin:SearchReset()
   ma_searcheditbox:SetScript("OnTextChanged", function() end)
   ma_var1editbox:SetScript("OnTextChanged", function() end)
   ma_searcheditbox:SetText("")
@@ -1731,7 +1731,7 @@ function MangAdmin:SearchReset()
   PopupScrollUpdate()
 end
 
-function MangAdmin:PrepareScript(object, text, script)
+function NightmareAdmin:PrepareScript(object, text, script)
   --if object then
     if text then
       if self.db.account.style.showtooltips then
@@ -1751,74 +1751,74 @@ end
 
 
 --[[INITIALIZION FUNCTIONS]]
-function MangAdmin:InitButtons()
+function NightmareAdmin:InitButtons()
   -- start tab buttons
-  self:PrepareScript(ma_tabbutton_main       , Locale["tt_MainButton"]         , function() MangAdmin:InstantGroupToggle("main") end)
-  self:PrepareScript(ma_tabbutton_char       , Locale["tt_CharButton"]         , function() MangAdmin:InstantGroupToggle("char") end)
-  self:PrepareScript(ma_tabbutton_char2      , Locale["tt_Char2Button"]        , function() MangAdmin:InstantGroupToggle("char2") end)
-  self:PrepareScript(ma_tabbutton_npc        , Locale["tt_NpcButton"]          , function() MangAdmin:InstantGroupToggle("npc"); end)
-  self:PrepareScript(ma_tabbutton_npc2       , Locale["tt_Npc2Button"]         , function() MangAdmin:InstantGroupToggle("npc2"); end)
-  self:PrepareScript(ma_tabbutton_go         , Locale["tt_GOButton"]           , function() MangAdmin:InstantGroupToggle("go"); end)
-  self:PrepareScript(ma_tabbutton_tele       , Locale["tt_TeleButton"]         , function() MangAdmin:InstantGroupToggle("tele"); end)
-  self:PrepareScript(ma_tabbutton_misc       , Locale["tt_MiscButton"]         , function() MangAdmin:InstantGroupToggle("misc") end)
-  self:PrepareScript(ma_tabbutton_server     , Locale["tt_ServerButton"]       , function() MangAdmin:InstantGroupToggle("server") end)
-  self:PrepareScript(ma_tabbutton_log        , Locale["tt_LogButton"]          , function() MangAdmin:InstantGroupToggle("log") end)
-  self:PrepareScript(ma_tabbutton_pvp        , nil          , function() MangAdmin:InstantGroupToggle("pvp") end)
-  self:PrepareScript(ma_tabbutton_event      , nil          , function() MangAdmin:InstantGroupToggle("event") end)
-  self:PrepareScript(ma_tabbutton_rpg        , nil          , function() MangAdmin:InstantGroupToggle("rpg") end)
-  self:PrepareScript(ma_tabbutton_vendor     , nil          , function() MangAdmin:InstantGroupToggle("vendor") end)
-  self:PrepareScript(ma_tabbutton_ahbot      , nil          , function() MangAdmin:InstantGroupToggle("ahbot") end)
-  self:PrepareScript(ma_tabbutton_who        , nil          , function() MangAdmin:InstantGroupToggle("who") end)
+  self:PrepareScript(ma_tabbutton_main       , Locale["tt_MainButton"]         , function() NightmareAdmin:InstantGroupToggle("main") end)
+  self:PrepareScript(ma_tabbutton_char       , Locale["tt_CharButton"]         , function() NightmareAdmin:InstantGroupToggle("char") end)
+  self:PrepareScript(ma_tabbutton_char2      , Locale["tt_Char2Button"]        , function() NightmareAdmin:InstantGroupToggle("char2") end)
+  self:PrepareScript(ma_tabbutton_npc        , Locale["tt_NpcButton"]          , function() NightmareAdmin:InstantGroupToggle("npc"); end)
+  self:PrepareScript(ma_tabbutton_npc2       , Locale["tt_Npc2Button"]         , function() NightmareAdmin:InstantGroupToggle("npc2"); end)
+  self:PrepareScript(ma_tabbutton_go         , Locale["tt_GOButton"]           , function() NightmareAdmin:InstantGroupToggle("go"); end)
+  self:PrepareScript(ma_tabbutton_tele       , Locale["tt_TeleButton"]         , function() NightmareAdmin:InstantGroupToggle("tele"); end)
+  self:PrepareScript(ma_tabbutton_misc       , Locale["tt_MiscButton"]         , function() NightmareAdmin:InstantGroupToggle("misc") end)
+  self:PrepareScript(ma_tabbutton_server     , Locale["tt_ServerButton"]       , function() NightmareAdmin:InstantGroupToggle("server") end)
+  self:PrepareScript(ma_tabbutton_log        , Locale["tt_LogButton"]          , function() NightmareAdmin:InstantGroupToggle("log") end)
+  self:PrepareScript(ma_tabbutton_pvp        , nil          , function() NightmareAdmin:InstantGroupToggle("pvp") end)
+  self:PrepareScript(ma_tabbutton_event      , nil          , function() NightmareAdmin:InstantGroupToggle("event") end)
+  self:PrepareScript(ma_tabbutton_rpg        , nil          , function() NightmareAdmin:InstantGroupToggle("rpg") end)
+  self:PrepareScript(ma_tabbutton_vendor     , nil          , function() NightmareAdmin:InstantGroupToggle("vendor") end)
+  self:PrepareScript(ma_tabbutton_ahbot      , nil          , function() NightmareAdmin:InstantGroupToggle("ahbot") end)
+  self:PrepareScript(ma_tabbutton_who        , nil          , function() NightmareAdmin:InstantGroupToggle("who") end)
   --end tab buttons
   -- start mini buttons
-  self:PrepareScript(ma_mm_logoframe         , nil                             , function() MangAdmin:OnClick() end)
-  self:PrepareScript(ma_mm_mainbutton        , Locale["tt_MainButton"]         , function() MangAdmin:InstantGroupToggle("main") end)
-  self:PrepareScript(ma_mm_charbutton        , Locale["tt_CharButton"]         , function() MangAdmin:InstantGroupToggle("char") end)
-  self:PrepareScript(ma_mm_char2button       , Locale["tt_Char2Button"]        , function() MangAdmin:InstantGroupToggle("char2") end)
-  self:PrepareScript(ma_mm_npcbutton         , Locale["tt_NpcButton"]          , function() MangAdmin:InstantGroupToggle("npc") end)
-  self:PrepareScript(ma_mm_npc2button        , Locale["tt_Npc2Button"]         , function() MangAdmin:InstantGroupToggle("npc2") end)
-  self:PrepareScript(ma_mm_gobutton          , Locale["tt_GOButton"]           , function() MangAdmin:InstantGroupToggle("go") end)
-  self:PrepareScript(ma_mm_telebutton        , Locale["tt_TeleButton"]         , function() MangAdmin:InstantGroupToggle("tele") end)
+  self:PrepareScript(ma_mm_logoframe         , nil                             , function() NightmareAdmin:OnClick() end)
+  self:PrepareScript(ma_mm_mainbutton        , Locale["tt_MainButton"]         , function() NightmareAdmin:InstantGroupToggle("main") end)
+  self:PrepareScript(ma_mm_charbutton        , Locale["tt_CharButton"]         , function() NightmareAdmin:InstantGroupToggle("char") end)
+  self:PrepareScript(ma_mm_char2button       , Locale["tt_Char2Button"]        , function() NightmareAdmin:InstantGroupToggle("char2") end)
+  self:PrepareScript(ma_mm_npcbutton         , Locale["tt_NpcButton"]          , function() NightmareAdmin:InstantGroupToggle("npc") end)
+  self:PrepareScript(ma_mm_npc2button        , Locale["tt_Npc2Button"]         , function() NightmareAdmin:InstantGroupToggle("npc2") end)
+  self:PrepareScript(ma_mm_gobutton          , Locale["tt_GOButton"]           , function() NightmareAdmin:InstantGroupToggle("go") end)
+  self:PrepareScript(ma_mm_telebutton        , Locale["tt_TeleButton"]         , function() NightmareAdmin:InstantGroupToggle("tele") end)
   self:PrepareScript(ma_mm_ticketbutton      , Locale["tt_TicketButton"]       , function() ShowTicketTab() end)
-  self:PrepareScript(ma_mm_miscbutton        , Locale["tt_MiscButton"]         , function() MangAdmin:InstantGroupToggle("misc") end)
-  self:PrepareScript(ma_mm_serverbutton      , Locale["tt_ServerButton"]       , function() MangAdmin:InstantGroupToggle("server") end)
-  self:PrepareScript(ma_mm_logbutton         , Locale["tt_LogButton"]          , function() MangAdmin:InstantGroupToggle("log") end)
-  self:PrepareScript(ma_mm_pvpbutton        , nil          , function() MangAdmin:InstantGroupToggle("pvp") end)
-  self:PrepareScript(ma_mm_eventbutton      , nil          , function() MangAdmin:InstantGroupToggle("event") end)
-  self:PrepareScript(ma_mm_rpgbutton        , nil          , function() MangAdmin:InstantGroupToggle("rpg") end)
-  self:PrepareScript(ma_mm_vendorbutton     , nil          , function() MangAdmin:InstantGroupToggle("vendor") end)
-  self:PrepareScript(ma_mm_ahbotbutton      , nil          , function() MangAdmin:InstantGroupToggle("ahbot") end)
-  self:PrepareScript(ma_mm_whobutton        , nil          , function() MangAdmin:InstantGroupToggle("who") end)
+  self:PrepareScript(ma_mm_miscbutton        , Locale["tt_MiscButton"]         , function() NightmareAdmin:InstantGroupToggle("misc") end)
+  self:PrepareScript(ma_mm_serverbutton      , Locale["tt_ServerButton"]       , function() NightmareAdmin:InstantGroupToggle("server") end)
+  self:PrepareScript(ma_mm_logbutton         , Locale["tt_LogButton"]          , function() NightmareAdmin:InstantGroupToggle("log") end)
+  self:PrepareScript(ma_mm_pvpbutton        , nil          , function() NightmareAdmin:InstantGroupToggle("pvp") end)
+  self:PrepareScript(ma_mm_eventbutton      , nil          , function() NightmareAdmin:InstantGroupToggle("event") end)
+  self:PrepareScript(ma_mm_rpgbutton        , nil          , function() NightmareAdmin:InstantGroupToggle("rpg") end)
+  self:PrepareScript(ma_mm_vendorbutton     , nil          , function() NightmareAdmin:InstantGroupToggle("vendor") end)
+  self:PrepareScript(ma_mm_ahbotbutton      , nil          , function() NightmareAdmin:InstantGroupToggle("ahbot") end)
+  self:PrepareScript(ma_mm_whobutton        , nil          , function() NightmareAdmin:InstantGroupToggle("who") end)
   --end mini buttons
-  self:PrepareScript(ma_languagebutton       , Locale["tt_LanguageButton"]     , function() MangAdmin:ChangeLanguage(UIDropDownMenu_GetSelectedValue(ma_languagedropdown)) end)
-  self:PrepareScript(ma_itembutton           , Locale["tt_ItemButton"]         , function() MangAdmin:TogglePopup("search", {type = "item"}) end)
-  self:PrepareScript(ma_itemsetbutton        , Locale["tt_ItemSetButton"]      , function() MangAdmin:TogglePopup("search", {type = "itemset"}) end)
-  self:PrepareScript(ma_spellbutton          , Locale["tt_SpellButton"]        , function() MangAdmin:TogglePopup("search", {type = "spell"}) end)
-  self:PrepareScript(ma_skillbutton          , Locale["tt_SkillButton"]        , function() MangAdmin:TogglePopup("search", {type = "skill"}) end)
-  self:PrepareScript(ma_questbutton          , Locale["tt_QuestButton"]        , function() MangAdmin:TogglePopup("search", {type = "quest"}) end)
-  self:PrepareScript(ma_creaturebutton       , Locale["tt_CreatureButton"]     , function() MangAdmin:TogglePopup("search", {type = "creature"}) end)
-  self:PrepareScript(ma_objectbutton         , Locale["tt_ObjectButton"]       , function() MangAdmin:TogglePopup("search", {type = "object"}) end)
-  self:PrepareScript(ma_telesearchbutton     , Locale["ma_TeleSearchButton"]   , function() MangAdmin:TogglePopup("search", {type = "tele"}) end)
-  self:PrepareScript(ma_sendmailbutton       , Locale["ma_Mail"]               , function() MangAdmin:TogglePopup("mail", {}) end)
-  --self:PrepareScript(ma_learnallbutton       , nil                             , function() MangAdmin:LearnSpell("all") end)
-  --self:PrepareScript(ma_learncraftsbutton    , nil                             , function() MangAdmin:LearnSpell("all_crafts") end)
-  --self:PrepareScript(ma_learngmbutton        , nil                             , function() MangAdmin:LearnSpell("all_gm") end)
-  --self:PrepareScript(ma_learnlangbutton      , nil                             , function() MangAdmin:LearnSpell("all_lang") end)
-  --self:PrepareScript(ma_learnclassbutton     , nil                             , function() MangAdmin:LearnSpell("all_myclass") end)
-  self:PrepareScript(ma_searchbutton         , nil                             , function() MangAdmin:SearchStart("item", ma_searcheditbox:GetText()) end)
-  self:PrepareScript(ma_resetsearchbutton    , nil                             , function() MangAdmin:SearchReset() end)
-  self:PrepareScript(ma_closebutton          , nil                             , function() MangAdmin:CloseButton("bg") end)
-  self:PrepareScript(ma_popupclosebutton     , nil                             , function() MangAdmin:CloseButton("popup") end)
-  self:PrepareScript(ma_popup2closebutton    , nil                             , function() MangAdmin:CloseButton("popup2") end)
-  self:PrepareScript(ma_inforefreshbutton    , nil                             , function() MangAdmin:ChatMsg(".server info") end)
-  self:PrepareScript(ma_frmtrslider          , Locale["tt_FrmTrSlider"]        , {{"OnMouseUp", function() MangAdmin:ChangeTransparency("frames") end},{"OnValueChanged", function() ma_frmtrsliderText:SetText(string.format("%.2f", ma_frmtrslider:GetValue())) end}})  
-  self:PrepareScript(ma_btntrslider          , Locale["tt_BtnTrSlider"]        , {{"OnMouseUp", function() MangAdmin:ChangeTransparency("buttons") end},{"OnValueChanged", function() ma_btntrsliderText:SetText(string.format("%.2f", ma_btntrslider:GetValue())) end}})  
+  self:PrepareScript(ma_languagebutton       , Locale["tt_LanguageButton"]     , function() NightmareAdmin:ChangeLanguage(UIDropDownMenu_GetSelectedValue(ma_languagedropdown)) end)
+  self:PrepareScript(ma_itembutton           , Locale["tt_ItemButton"]         , function() NightmareAdmin:TogglePopup("search", {type = "item"}) end)
+  self:PrepareScript(ma_itemsetbutton        , Locale["tt_ItemSetButton"]      , function() NightmareAdmin:TogglePopup("search", {type = "itemset"}) end)
+  self:PrepareScript(ma_spellbutton          , Locale["tt_SpellButton"]        , function() NightmareAdmin:TogglePopup("search", {type = "spell"}) end)
+  self:PrepareScript(ma_skillbutton          , Locale["tt_SkillButton"]        , function() NightmareAdmin:TogglePopup("search", {type = "skill"}) end)
+  self:PrepareScript(ma_questbutton          , Locale["tt_QuestButton"]        , function() NightmareAdmin:TogglePopup("search", {type = "quest"}) end)
+  self:PrepareScript(ma_creaturebutton       , Locale["tt_CreatureButton"]     , function() NightmareAdmin:TogglePopup("search", {type = "creature"}) end)
+  self:PrepareScript(ma_objectbutton         , Locale["tt_ObjectButton"]       , function() NightmareAdmin:TogglePopup("search", {type = "object"}) end)
+  self:PrepareScript(ma_telesearchbutton     , Locale["ma_TeleSearchButton"]   , function() NightmareAdmin:TogglePopup("search", {type = "tele"}) end)
+  self:PrepareScript(ma_sendmailbutton       , Locale["ma_Mail"]               , function() NightmareAdmin:TogglePopup("mail", {}) end)
+  --self:PrepareScript(ma_learnallbutton       , nil                             , function() NightmareAdmin:LearnSpell("all") end)
+  --self:PrepareScript(ma_learncraftsbutton    , nil                             , function() NightmareAdmin:LearnSpell("all_crafts") end)
+  --self:PrepareScript(ma_learngmbutton        , nil                             , function() NightmareAdmin:LearnSpell("all_gm") end)
+  --self:PrepareScript(ma_learnlangbutton      , nil                             , function() NightmareAdmin:LearnSpell("all_lang") end)
+  --self:PrepareScript(ma_learnclassbutton     , nil                             , function() NightmareAdmin:LearnSpell("all_myclass") end)
+  self:PrepareScript(ma_searchbutton         , nil                             , function() NightmareAdmin:SearchStart("item", ma_searcheditbox:GetText()) end)
+  self:PrepareScript(ma_resetsearchbutton    , nil                             , function() NightmareAdmin:SearchReset() end)
+  self:PrepareScript(ma_closebutton          , nil                             , function() NightmareAdmin:CloseButton("bg") end)
+  self:PrepareScript(ma_popupclosebutton     , nil                             , function() NightmareAdmin:CloseButton("popup") end)
+  self:PrepareScript(ma_popup2closebutton    , nil                             , function() NightmareAdmin:CloseButton("popup2") end)
+  self:PrepareScript(ma_inforefreshbutton    , nil                             , function() NightmareAdmin:ChatMsg(".server info") end)
+  self:PrepareScript(ma_frmtrslider          , Locale["tt_FrmTrSlider"]        , {{"OnMouseUp", function() NightmareAdmin:ChangeTransparency("frames") end},{"OnValueChanged", function() ma_frmtrsliderText:SetText(string.format("%.2f", ma_frmtrslider:GetValue())) end}})  
+  self:PrepareScript(ma_btntrslider          , Locale["tt_BtnTrSlider"]        , {{"OnMouseUp", function() NightmareAdmin:ChangeTransparency("buttons") end},{"OnValueChanged", function() ma_btntrsliderText:SetText(string.format("%.2f", ma_btntrslider:GetValue())) end}})  
   self:PrepareScript(ma_mm_revivebutton      , nil                             , function() SendChatMessage(".revive", "GUILD", nil, nil) end)
 end
 
 
 
-function MangAdmin:InitDropDowns()
+function NightmareAdmin:InitDropDowns()
   -- RELOAD TABLES
   local function ReloadTableDropDownInitialize()
     local level = 1
@@ -2050,26 +2050,26 @@ function MangAdmin:InitDropDowns()
 
 end
 
-function MangAdmin:InitSliders()
+function NightmareAdmin:InitSliders()
   -- Frame Transparency Slider
   ma_frmtrslider:SetOrientation("HORIZONTAL")
   ma_frmtrslider:SetMinMaxValues(0.1, 1.0)
   ma_frmtrslider:SetValueStep(0.05)
-  ma_frmtrslider:SetValue(MangAdmin.db.account.style.transparency.frames)
-  ma_frmtrsliderText:SetText(string.format("%.2f", MangAdmin.db.account.style.transparency.frames))
+  ma_frmtrslider:SetValue(NightmareAdmin.db.account.style.transparency.frames)
+  ma_frmtrsliderText:SetText(string.format("%.2f", NightmareAdmin.db.account.style.transparency.frames))
   -- Button Transparency Slider
   ma_btntrslider:SetOrientation("HORIZONTAL")
   ma_btntrslider:SetMinMaxValues(0.1, 1.0)
   ma_btntrslider:SetValueStep(0.05)
-  ma_btntrslider:SetValue(MangAdmin.db.account.style.transparency.buttons)
-  ma_btntrsliderText:SetText(string.format("%.2f", MangAdmin.db.account.style.transparency.buttons))
+  ma_btntrslider:SetValue(NightmareAdmin.db.account.style.transparency.buttons)
+  ma_btntrsliderText:SetText(string.format("%.2f", NightmareAdmin.db.account.style.transparency.buttons))
 end
 
-function MangAdmin:InitScrollFrames()
-  cont = MangAdmin.db.char.selectedCont
+function NightmareAdmin:InitScrollFrames()
+  cont = NightmareAdmin.db.char.selectedCont
   ma_PopupScrollBar:SetScript("OnVerticalScroll", PopupScrollUpdate(), function(self, offset) FauxScrollFrame_OnVerticalScroll(self, offset, 30, PopupScrollUpdate()) end)
   ma_PopupScrollBar:SetScript("OnShow", function() PopupScrollUpdate() end)
-  --local zoneupdate = function() Mang:TeleScrollUpdate() end
+  --local zoneupdate = function() NA:TeleScrollUpdate() end
   ma_ZoneScrollBar:SetScript("OnVerticalScroll", TeleScrollUpdate(), function(self, offset) FauxScrollFrame_OnVerticalScroll(self, offset, 16, TeleScrollUpdate()) end)
   ma_ZoneScrollBar:SetScript("OnShow", function() TeleScrollUpdate() end)
   ma_SubzoneScrollBar:SetScript("OnVerticalScroll", SubzoneScrollUpdate(), function(self, offset) FauxScrollFrame_OnVerticalScroll(self, offset, 16, SubzoneScrollUpdate()) end)
@@ -2088,17 +2088,17 @@ function MangAdmin:InitScrollFrames()
     {"OnCursorChanged", function() ScrollingEdit_OnCursorChanged(self, x, y, w, h) end},
     {"OnUpdate", function() ScrollingEdit_OnUpdate(self, 0, ma_ticketeditbox) end}}) ]]
   ma_mailscrollframe:SetScrollChild(ma_maileditbox)
-  ma_maileditbox:SetScript("OnTextChanged", function() MangAdmin:UpdateMailBytesLeft() end)
+  ma_maileditbox:SetScript("OnTextChanged", function() NightmareAdmin:UpdateMailBytesLeft() end)
   ma_maileditbox:SetScript("OnCursorChanged", function() ScrollingEdit_OnCursorChanged(self, x, y, w, h) end)
 --  ma_maileditbox:SetScript("OnUpdate", function() ScrollingEdit_OnUpdate(self, 0, ma_maileditbox) end)
---[[  self:PrepareScript(ma_maileditbox, nil, {{"OnTextChanged", function() ScrollingEdit_OnTextChanged(self, ma_maileditbox); MangAdmin:UpdateMailBytesLeft() end},
+--[[  self:PrepareScript(ma_maileditbox, nil, {{"OnTextChanged", function() ScrollingEdit_OnTextChanged(self, ma_maileditbox); NightmareAdmin:UpdateMailBytesLeft() end},
     {"OnCursorChanged", function() ScrollingEdit_OnCursorChanged(self, x, y, w, h) end},
     {"OnUpdate", function() ScrollingEdit_OnUpdate(self, 0, ma_maileditbox) end}})
 ]]
-  ma_logframe:SetScript("OnUpdate", function() MangAdminLogOnUpdate(self, 0, ma_logframe) end)
+  ma_logframe:SetScript("OnUpdate", function() NightmareAdminLogOnUpdate(self, 0, ma_logframe) end)
 end
 
-function MangAdminLogOnUpdate(elapsedTime)
+function NightmareAdminLogOnUpdate(elapsedTime)
   if ( ma_logscrollupbutton:GetButtonState() == "PUSHED" ) then
     ma_logframe:ScrollUp()
   end
@@ -2107,7 +2107,7 @@ function MangAdminLogOnUpdate(elapsedTime)
   end
 end
 
-function MangAdmin:NoResults(var)
+function NightmareAdmin:NoResults(var)
   if var == "ticket" then
     -- Reset list and make an entry "No Tickets"
     self:LogAction(Locale["ma_TicketsNoTickets"])
@@ -2180,12 +2180,12 @@ end
 function PopupScrollUpdate()
   local line -- 1 through 7 of our window to scroll
   local lineplusoffset -- an index into our data calculated from the scroll offset
-  if MangAdmin.db.char.requests.item or MangAdmin.db.char.requests.favitem then --get items
+  if NightmareAdmin.db.char.requests.item or NightmareAdmin.db.char.requests.favitem then --get items
     local count = 0
-    if MangAdmin.db.char.requests.item then
-      table.foreachi(MangAdmin.db.account.buffer.items, function() count = count + 1 end)
-    elseif MangAdmin.db.char.requests.favitem then
-      table.foreachi(MangAdmin.db.account.favorites.items, function() count = count + 1 end)
+    if NightmareAdmin.db.char.requests.item then
+      table.foreachi(NightmareAdmin.db.account.buffer.items, function() count = count + 1 end)
+    elseif NightmareAdmin.db.char.requests.favitem then
+      table.foreachi(NightmareAdmin.db.account.favorites.items, function() count = count + 1 end)
     end
     if count > 0 then
       ma_lookupresulttext:SetText(Locale["searchResults"]..count)
@@ -2194,36 +2194,36 @@ function PopupScrollUpdate()
         lineplusoffset = line + FauxScrollFrame_GetOffset(ma_PopupScrollBar)
         if lineplusoffset <= count then
           local item
-          if MangAdmin.db.char.requests.item then
-            item = MangAdmin.db.account.buffer.items[lineplusoffset]
-          elseif MangAdmin.db.char.requests.favitem then
-            item = MangAdmin.db.account.favorites.items[lineplusoffset]
+          if NightmareAdmin.db.char.requests.item then
+            item = NightmareAdmin.db.account.buffer.items[lineplusoffset]
+          elseif NightmareAdmin.db.char.requests.favitem then
+            item = NightmareAdmin.db.account.favorites.items[lineplusoffset]
           end
           local key = lineplusoffset
           --item icons
           getglobal("ma_PopupScrollBarEntryIcon"..line.."IconTexture"):SetTexture(GetItemIcon(item["itId"]))
           getglobal("ma_PopupScrollBarEntryIcon"..line):SetScript("OnEnter", function() GameTooltip:SetOwner(this, "ANCHOR_RIGHT"); GameTooltip:SetHyperlink("item:"..item["itId"]..":0:0:0:0:0:0:0"); GameTooltip:Show() end)
           getglobal("ma_PopupScrollBarEntryIcon"..line):SetScript("OnLeave", function() GameTooltip:SetOwner(this, "ANCHOR_RIGHT"); GameTooltip:Hide() end)
-          getglobal("ma_PopupScrollBarEntryIcon"..line):SetScript("OnClick", function() MangAdmin:AddItem(item["itId"], arg1) end)
+          getglobal("ma_PopupScrollBarEntryIcon"..line):SetScript("OnClick", function() NightmareAdmin:AddItem(item["itId"], arg1) end)
           getglobal("ma_PopupScrollBarEntryIcon"..line):Show()
           --item description
           getglobal("ma_PopupScrollBarEntry"..line):SetText("Id: |cffffffff"..item["itId"].."|r Name: |cffffffff"..item["itName"].."|r")
-          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() MangAdmin:AddItem(item["itId"], arg1) end)
+          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() NightmareAdmin:AddItem(item["itId"], arg1) end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnEnter", function() GameTooltip:SetOwner(this, "ANCHOR_RIGHT"); GameTooltip:SetHyperlink("item:"..item["itId"]..":0:0:0:0:0:0:0"); GameTooltip:Show() end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnLeave", function() GameTooltip:SetOwner(this, "ANCHOR_RIGHT"); GameTooltip:Hide() end)
           getglobal("ma_PopupScrollBarEntry"..line):Enable()
           getglobal("ma_PopupScrollBarEntry"..line):Show()
-          if MangAdmin.db.char.requests.item then
+          if NightmareAdmin.db.char.requests.item then
             if item["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.items[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.items[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.items[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.items[key]["checked"] = true; PopupScrollUpdate() end)
             end
-          elseif MangAdmin.db.char.requests.favitem then
+          elseif NightmareAdmin.db.char.requests.favitem then
             if item["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.items[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.items[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.items[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.items[key]["checked"] = true; PopupScrollUpdate() end)
             end
           end
           getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetChecked(item["checked"])
@@ -2236,19 +2236,19 @@ function PopupScrollUpdate()
         end
       end
     else
-      if MangAdmin.db.char.requests.item then
-        MangAdmin:NoResults("search")
-      elseif MangAdmin.db.char.requests.favitem then
-        MangAdmin:NoResults("favorites")
+      if NightmareAdmin.db.char.requests.item then
+        NightmareAdmin:NoResults("search")
+      elseif NightmareAdmin.db.char.requests.favitem then
+        NightmareAdmin:NoResults("favorites")
       end
     end
     
-  elseif MangAdmin.db.char.requests.itemset or MangAdmin.db.char.requests.favitemset then --get itemsets
+  elseif NightmareAdmin.db.char.requests.itemset or NightmareAdmin.db.char.requests.favitemset then --get itemsets
     local count = 0
-    if MangAdmin.db.char.requests.itemset then
-      table.foreachi(MangAdmin.db.account.buffer.itemsets, function() count = count + 1 end)
-    elseif MangAdmin.db.char.requests.favitemset then
-      table.foreachi(MangAdmin.db.account.favorites.itemsets, function() count = count + 1 end)
+    if NightmareAdmin.db.char.requests.itemset then
+      table.foreachi(NightmareAdmin.db.account.buffer.itemsets, function() count = count + 1 end)
+    elseif NightmareAdmin.db.char.requests.favitemset then
+      table.foreachi(NightmareAdmin.db.account.favorites.itemsets, function() count = count + 1 end)
     end
     if count > 0 then
       ma_lookupresulttext:SetText(Locale["searchResults"]..count)
@@ -2258,29 +2258,29 @@ function PopupScrollUpdate()
         lineplusoffset = line + FauxScrollFrame_GetOffset(ma_PopupScrollBar)
         if lineplusoffset <= count then
           local itemset
-          if MangAdmin.db.char.requests.itemset then
-            itemset = MangAdmin.db.account.buffer.itemsets[lineplusoffset]
-          elseif MangAdmin.db.char.requests.favitemset then
-            itemset = MangAdmin.db.account.favorites.itemsets[lineplusoffset]
+          if NightmareAdmin.db.char.requests.itemset then
+            itemset = NightmareAdmin.db.account.buffer.itemsets[lineplusoffset]
+          elseif NightmareAdmin.db.char.requests.favitemset then
+            itemset = NightmareAdmin.db.account.favorites.itemsets[lineplusoffset]
           end
           local key = lineplusoffset
           getglobal("ma_PopupScrollBarEntry"..line):SetText("Id: |cffffffff"..itemset["isId"].."|r Name: |cffffffff"..itemset["isName"].."|r")
-          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() MangAdmin:AddItemSet(itemset["isId"]) end)
+          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() NightmareAdmin:AddItemSet(itemset["isId"]) end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnEnter", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnLeave", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):Enable()
           getglobal("ma_PopupScrollBarEntry"..line):Show()
-          if MangAdmin.db.char.requests.itemset then
+          if NightmareAdmin.db.char.requests.itemset then
             if itemset["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.itemsets[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.itemsets[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.itemsets[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.itemsets[key]["checked"] = true; PopupScrollUpdate() end)
             end
-          elseif MangAdmin.db.char.requests.favitemset then
+          elseif NightmareAdmin.db.char.requests.favitemset then
             if itemset["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.itemsets[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.itemsets[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.itemsets[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.itemsets[key]["checked"] = true; PopupScrollUpdate() end)
             end
           end
           getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetChecked(itemset["checked"])
@@ -2292,19 +2292,19 @@ function PopupScrollUpdate()
         end
       end
     else
-      if MangAdmin.db.char.requests.itemset then
-        MangAdmin:NoResults("search")
-      elseif MangAdmin.db.char.requests.favitemset then
-        MangAdmin:NoResults("favorites")
+      if NightmareAdmin.db.char.requests.itemset then
+        NightmareAdmin:NoResults("search")
+      elseif NightmareAdmin.db.char.requests.favitemset then
+        NightmareAdmin:NoResults("favorites")
       end
     end
     
-  elseif MangAdmin.db.char.requests.quest or MangAdmin.db.char.requests.favquest then --get quests
+  elseif NightmareAdmin.db.char.requests.quest or NightmareAdmin.db.char.requests.favquest then --get quests
     local count = 0
-    if MangAdmin.db.char.requests.quest then
-      table.foreachi(MangAdmin.db.account.buffer.quests, function() count = count + 1 end)
-    elseif MangAdmin.db.char.requests.favquest then
-      table.foreachi(MangAdmin.db.account.favorites.quests, function() count = count + 1 end)
+    if NightmareAdmin.db.char.requests.quest then
+      table.foreachi(NightmareAdmin.db.account.buffer.quests, function() count = count + 1 end)
+    elseif NightmareAdmin.db.char.requests.favquest then
+      table.foreachi(NightmareAdmin.db.account.favorites.quests, function() count = count + 1 end)
     end
     if count > 0 then
       ma_lookupresulttext:SetText(Locale["searchResults"]..count)
@@ -2314,29 +2314,29 @@ function PopupScrollUpdate()
         lineplusoffset = line + FauxScrollFrame_GetOffset(ma_PopupScrollBar)
         if lineplusoffset <= count then
           local quest
-          if MangAdmin.db.char.requests.quest then
-            quest = MangAdmin.db.account.buffer.quests[lineplusoffset]
-          elseif MangAdmin.db.char.requests.favquest then
-            quest = MangAdmin.db.account.favorites.quests[lineplusoffset]
+          if NightmareAdmin.db.char.requests.quest then
+            quest = NightmareAdmin.db.account.buffer.quests[lineplusoffset]
+          elseif NightmareAdmin.db.char.requests.favquest then
+            quest = NightmareAdmin.db.account.favorites.quests[lineplusoffset]
           end
           local key = lineplusoffset
           getglobal("ma_PopupScrollBarEntry"..line):SetText("Id: |cffffffff"..quest["qsId"].."|r Name: |cffffffff"..quest["qsName"].."|r")
-          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() MangAdmin:Quest(quest["qsId"], arg1) end)
+          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() NightmareAdmin:Quest(quest["qsId"], arg1) end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnEnter", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnLeave", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):Enable()
           getglobal("ma_PopupScrollBarEntry"..line):Show()
-          if MangAdmin.db.char.requests.quest then
+          if NightmareAdmin.db.char.requests.quest then
             if quest["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.quests[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.quests[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.quests[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.quests[key]["checked"] = true; PopupScrollUpdate() end)
             end
-          elseif MangAdmin.db.char.requests.favquest then
+          elseif NightmareAdmin.db.char.requests.favquest then
             if quest["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.quests[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.quests[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.quests[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.quests[key]["checked"] = true; PopupScrollUpdate() end)
             end
           end
           getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetChecked(quest["checked"])
@@ -2348,19 +2348,19 @@ function PopupScrollUpdate()
         end
       end
     else
-      if MangAdmin.db.char.requests.quest then
-        MangAdmin:NoResults("search")
-      elseif MangAdmin.db.char.requests.favquest then
-        MangAdmin:NoResults("favorites")
+      if NightmareAdmin.db.char.requests.quest then
+        NightmareAdmin:NoResults("search")
+      elseif NightmareAdmin.db.char.requests.favquest then
+        NightmareAdmin:NoResults("favorites")
       end
     end
     
-  elseif MangAdmin.db.char.requests.creature or MangAdmin.db.char.requests.favcreature then --get creatures
+  elseif NightmareAdmin.db.char.requests.creature or NightmareAdmin.db.char.requests.favcreature then --get creatures
     local count = 0
-    if MangAdmin.db.char.requests.creature then
-      table.foreachi(MangAdmin.db.account.buffer.creatures, function() count = count + 1 end)
-    elseif MangAdmin.db.char.requests.favcreature then
-      table.foreachi(MangAdmin.db.account.favorites.creatures, function() count = count + 1 end)
+    if NightmareAdmin.db.char.requests.creature then
+      table.foreachi(NightmareAdmin.db.account.buffer.creatures, function() count = count + 1 end)
+    elseif NightmareAdmin.db.char.requests.favcreature then
+      table.foreachi(NightmareAdmin.db.account.favorites.creatures, function() count = count + 1 end)
     end
     if count > 0 then
       ma_lookupresulttext:SetText(Locale["searchResults"]..count)
@@ -2370,29 +2370,29 @@ function PopupScrollUpdate()
         lineplusoffset = line + FauxScrollFrame_GetOffset(ma_PopupScrollBar)
         if lineplusoffset <= count then
           local creature
-          if MangAdmin.db.char.requests.creature then
-            creature = MangAdmin.db.account.buffer.creatures[lineplusoffset]
-          elseif MangAdmin.db.char.requests.favcreature then
-            creature = MangAdmin.db.account.favorites.creatures[lineplusoffset]
+          if NightmareAdmin.db.char.requests.creature then
+            creature = NightmareAdmin.db.account.buffer.creatures[lineplusoffset]
+          elseif NightmareAdmin.db.char.requests.favcreature then
+            creature = NightmareAdmin.db.account.favorites.creatures[lineplusoffset]
           end
           local key = lineplusoffset
           getglobal("ma_PopupScrollBarEntry"..line):SetText("Id: |cffffffff"..creature["crId"].."|r Name: |cffffffff"..creature["crName"].."|r")
-          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() MangAdmin:Creature(creature["crId"], arg1) end) 
+          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() NightmareAdmin:Creature(creature["crId"], arg1) end) 
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnEnter", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnLeave", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):Enable()
           getglobal("ma_PopupScrollBarEntry"..line):Show()
-          if MangAdmin.db.char.requests.creature then
+          if NightmareAdmin.db.char.requests.creature then
             if creature["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.creatures[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.creatures[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.creatures[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.creatures[key]["checked"] = true; PopupScrollUpdate() end)
             end
-          elseif MangAdmin.db.char.requests.favcreature then
+          elseif NightmareAdmin.db.char.requests.favcreature then
             if creature["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.creatures[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.creatures[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.creatures[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.creatures[key]["checked"] = true; PopupScrollUpdate() end)
             end
           end
           getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetChecked(creature["checked"])
@@ -2404,19 +2404,19 @@ function PopupScrollUpdate()
         end
       end
     else
-      if MangAdmin.db.char.requests.creature then
-        MangAdmin:NoResults("search")
-      elseif MangAdmin.db.char.requests.favcreature then
-        MangAdmin:NoResults("favorites")
+      if NightmareAdmin.db.char.requests.creature then
+        NightmareAdmin:NoResults("search")
+      elseif NightmareAdmin.db.char.requests.favcreature then
+        NightmareAdmin:NoResults("favorites")
       end
     end
     
-  elseif MangAdmin.db.char.requests.spell or MangAdmin.db.char.requests.favspell then --get spells
+  elseif NightmareAdmin.db.char.requests.spell or NightmareAdmin.db.char.requests.favspell then --get spells
     local count = 0
-    if MangAdmin.db.char.requests.spell then
-      table.foreachi(MangAdmin.db.account.buffer.spells, function() count = count + 1 end)
-    elseif MangAdmin.db.char.requests.favspell then
-      table.foreachi(MangAdmin.db.account.favorites.spells, function() count = count + 1 end)
+    if NightmareAdmin.db.char.requests.spell then
+      table.foreachi(NightmareAdmin.db.account.buffer.spells, function() count = count + 1 end)
+    elseif NightmareAdmin.db.char.requests.favspell then
+      table.foreachi(NightmareAdmin.db.account.favorites.spells, function() count = count + 1 end)
     end
     if count > 0 then
       ma_lookupresulttext:SetText(Locale["searchResults"]..count)
@@ -2426,10 +2426,10 @@ function PopupScrollUpdate()
         lineplusoffset = line + FauxScrollFrame_GetOffset(ma_PopupScrollBar)
         if lineplusoffset <= count then
           local spell
-          if MangAdmin.db.char.requests.spell then
-            spell = MangAdmin.db.account.buffer.spells[lineplusoffset]
-          elseif MangAdmin.db.char.requests.favspell then
-            spell = MangAdmin.db.account.favorites.spells[lineplusoffset]
+          if NightmareAdmin.db.char.requests.spell then
+            spell = NightmareAdmin.db.account.buffer.spells[lineplusoffset]
+          elseif NightmareAdmin.db.char.requests.favspell then
+            spell = NightmareAdmin.db.account.favorites.spells[lineplusoffset]
           end
           local key = lineplusoffset
           --spell icon
@@ -2441,17 +2441,17 @@ function PopupScrollUpdate()
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() LearnSpell(spell["spId"], arg1) end)  
           getglobal("ma_PopupScrollBarEntry"..line):Enable()
           getglobal("ma_PopupScrollBarEntry"..line):Show()
-          if MangAdmin.db.char.requests.spell then
+          if NightmareAdmin.db.char.requests.spell then
             if spell["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.spells[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.spells[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.spells[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.spells[key]["checked"] = true; PopupScrollUpdate() end)
             end
-          elseif MangAdmin.db.char.requests.favspell then
+          elseif NightmareAdmin.db.char.requests.favspell then
             if spell["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.spells[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.spells[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.spells[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.spells[key]["checked"] = true; PopupScrollUpdate() end)
             end
           end
           getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetChecked(spell["checked"])
@@ -2463,19 +2463,19 @@ function PopupScrollUpdate()
         end
       end
     else
-      if MangAdmin.db.char.requests.spell then
-        MangAdmin:NoResults("search")
-      elseif MangAdmin.db.char.requests.favspell then
-        MangAdmin:NoResults("favorites")
+      if NightmareAdmin.db.char.requests.spell then
+        NightmareAdmin:NoResults("search")
+      elseif NightmareAdmin.db.char.requests.favspell then
+        NightmareAdmin:NoResults("favorites")
       end
     end
     
-  elseif MangAdmin.db.char.requests.skill or MangAdmin.db.char.requests.favskill then --get skills
+  elseif NightmareAdmin.db.char.requests.skill or NightmareAdmin.db.char.requests.favskill then --get skills
     local count = 0
-    if MangAdmin.db.char.requests.skill then
-      table.foreachi(MangAdmin.db.account.buffer.skills, function() count = count + 1 end)
-    elseif MangAdmin.db.char.requests.favskill then
-      table.foreachi(MangAdmin.db.account.favorites.skills, function() count = count + 1 end)
+    if NightmareAdmin.db.char.requests.skill then
+      table.foreachi(NightmareAdmin.db.account.buffer.skills, function() count = count + 1 end)
+    elseif NightmareAdmin.db.char.requests.favskill then
+      table.foreachi(NightmareAdmin.db.account.favorites.skills, function() count = count + 1 end)
     end
     if count > 0 then
       ma_lookupresulttext:SetText(Locale["searchResults"]..count)
@@ -2485,29 +2485,29 @@ function PopupScrollUpdate()
         lineplusoffset = line + FauxScrollFrame_GetOffset(ma_PopupScrollBar)
         if lineplusoffset <= count then
           local skill
-          if MangAdmin.db.char.requests.skill then
-            skill = MangAdmin.db.account.buffer.skills[lineplusoffset]
-          elseif MangAdmin.db.char.requests.favskill then
-            skill = MangAdmin.db.account.favorites.skills[lineplusoffset]
+          if NightmareAdmin.db.char.requests.skill then
+            skill = NightmareAdmin.db.account.buffer.skills[lineplusoffset]
+          elseif NightmareAdmin.db.char.requests.favskill then
+            skill = NightmareAdmin.db.account.favorites.skills[lineplusoffset]
           end
           local key = lineplusoffset
           getglobal("ma_PopupScrollBarEntry"..line):SetText("Id: |cffffffff"..skill["skId"].."|r Name: |cffffffff"..skill["skName"].."|r")
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnEnter", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnLeave", function() --[[Do nothing]] end)
-          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() MangAdmin:SetSkill(skill["skId"], nil, nil) end)  
+          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() NightmareAdmin:SetSkill(skill["skId"], nil, nil) end)  
           getglobal("ma_PopupScrollBarEntry"..line):Enable()
           getglobal("ma_PopupScrollBarEntry"..line):Show()
-          if MangAdmin.db.char.requests.skill then
+          if NightmareAdmin.db.char.requests.skill then
             if skill["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.skills[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.skills[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.skills[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.skills[key]["checked"] = true; PopupScrollUpdate() end)
             end
-          elseif MangAdmin.db.char.requests.favskill then
+          elseif NightmareAdmin.db.char.requests.favskill then
             if skill["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.skills[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.skills[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.skills[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.skills[key]["checked"] = true; PopupScrollUpdate() end)
             end
           end
           getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetChecked(skill["checked"])
@@ -2519,19 +2519,19 @@ function PopupScrollUpdate()
         end
       end
     else
-      if MangAdmin.db.char.requests.skill then
-        MangAdmin:NoResults("search")
-      elseif MangAdmin.db.char.requests.favskill then
-        MangAdmin:NoResults("favorites")
+      if NightmareAdmin.db.char.requests.skill then
+        NightmareAdmin:NoResults("search")
+      elseif NightmareAdmin.db.char.requests.favskill then
+        NightmareAdmin:NoResults("favorites")
       end
     end
     
-  elseif MangAdmin.db.char.requests.object or MangAdmin.db.char.requests.favobject then --get objects
+  elseif NightmareAdmin.db.char.requests.object or NightmareAdmin.db.char.requests.favobject then --get objects
     local count = 0
-    if MangAdmin.db.char.requests.object then
-      table.foreachi(MangAdmin.db.account.buffer.objects, function() count = count + 1 end)
-    elseif MangAdmin.db.char.requests.favobject then
-      table.foreachi(MangAdmin.db.account.favorites.objects, function() count = count + 1 end)
+    if NightmareAdmin.db.char.requests.object then
+      table.foreachi(NightmareAdmin.db.account.buffer.objects, function() count = count + 1 end)
+    elseif NightmareAdmin.db.char.requests.favobject then
+      table.foreachi(NightmareAdmin.db.account.favorites.objects, function() count = count + 1 end)
     end
     if count > 0 then
       ma_lookupresulttext:SetText(Locale["searchResults"]..count)
@@ -2541,29 +2541,29 @@ function PopupScrollUpdate()
         lineplusoffset = line + FauxScrollFrame_GetOffset(ma_PopupScrollBar)
         if lineplusoffset <= count then
           local object
-          if MangAdmin.db.char.requests.object then
-            object = MangAdmin.db.account.buffer.objects[lineplusoffset]
-          elseif MangAdmin.db.char.requests.favobject then
-            object = MangAdmin.db.account.favorites.objects[lineplusoffset]
+          if NightmareAdmin.db.char.requests.object then
+            object = NightmareAdmin.db.account.buffer.objects[lineplusoffset]
+          elseif NightmareAdmin.db.char.requests.favobject then
+            object = NightmareAdmin.db.account.favorites.objects[lineplusoffset]
           end
           local key = lineplusoffset
           getglobal("ma_PopupScrollBarEntry"..line):SetText("Id: |cffffffff"..object["objId"].."|r Name: |cffffffff"..object["objName"].."|r")
-          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() MangAdmin:AddObject(object["objId"], arg1) end)    
+          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() NightmareAdmin:AddObject(object["objId"], arg1) end)    
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnEnter", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnLeave", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):Enable()
           getglobal("ma_PopupScrollBarEntry"..line):Show()
-          if MangAdmin.db.char.requests.object then
+          if NightmareAdmin.db.char.requests.object then
             if object["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.objects[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.objects[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.objects[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.objects[key]["checked"] = true; PopupScrollUpdate() end)
             end
-          elseif MangAdmin.db.char.requests.favobject then
+          elseif NightmareAdmin.db.char.requests.favobject then
             if object["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.objects[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.objects[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.objects[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.objects[key]["checked"] = true; PopupScrollUpdate() end)
             end
           end
           getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetChecked(object["checked"])
@@ -2575,19 +2575,19 @@ function PopupScrollUpdate()
         end
       end
     else
-      if MangAdmin.db.char.requests.object then
-        MangAdmin:NoResults("search")
-      elseif MangAdmin.db.char.requests.favobject then
-        MangAdmin:NoResults("favorites")
+      if NightmareAdmin.db.char.requests.object then
+        NightmareAdmin:NoResults("search")
+      elseif NightmareAdmin.db.char.requests.favobject then
+        NightmareAdmin:NoResults("favorites")
       end
     end
     
-  elseif MangAdmin.db.char.requests.tele or MangAdmin.db.char.requests.favtele then --get teles
+  elseif NightmareAdmin.db.char.requests.tele or NightmareAdmin.db.char.requests.favtele then --get teles
     local count = 0
-    if MangAdmin.db.char.requests.tele then
-      table.foreachi(MangAdmin.db.account.buffer.teles, function() count = count + 1 end)
-    elseif MangAdmin.db.char.requests.favtele then
-      table.foreachi(MangAdmin.db.account.favorites.teles, function() count = count + 1 end)
+    if NightmareAdmin.db.char.requests.tele then
+      table.foreachi(NightmareAdmin.db.account.buffer.teles, function() count = count + 1 end)
+    elseif NightmareAdmin.db.char.requests.favtele then
+      table.foreachi(NightmareAdmin.db.account.favorites.teles, function() count = count + 1 end)
     end
     if count > 0 then
       ma_lookupresulttext:SetText(Locale["searchResults"]..count)
@@ -2597,29 +2597,29 @@ function PopupScrollUpdate()
         lineplusoffset = line + FauxScrollFrame_GetOffset(ma_PopupScrollBar)
         if lineplusoffset <= count then
           local tele
-          if MangAdmin.db.char.requests.tele then
-            tele = MangAdmin.db.account.buffer.teles[lineplusoffset]
-          elseif MangAdmin.db.char.requests.favtele then
-            tele = MangAdmin.db.account.favorites.teles[lineplusoffset]
+          if NightmareAdmin.db.char.requests.tele then
+            tele = NightmareAdmin.db.account.buffer.teles[lineplusoffset]
+          elseif NightmareAdmin.db.char.requests.favtele then
+            tele = NightmareAdmin.db.account.favorites.teles[lineplusoffset]
           end
           local key = lineplusoffset
           getglobal("ma_PopupScrollBarEntry"..line):SetText("Name: |cffffffff"..tele["tName"].."|r")
-          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() MangAdmin:ChatMsg(".tele "..tele["tName"]) end)    
+          getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnClick", function() NightmareAdmin:ChatMsg(".tele "..tele["tName"]) end)    
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnEnter", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):SetScript("OnLeave", function() --[[Do nothing]] end)
           getglobal("ma_PopupScrollBarEntry"..line):Enable()
           getglobal("ma_PopupScrollBarEntry"..line):Show()
-          if MangAdmin.db.char.requests.tele then
+          if NightmareAdmin.db.char.requests.tele then
             if tele["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.teles[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.teles[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.buffer.teles[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.buffer.teles[key]["checked"] = true; PopupScrollUpdate() end)
             end
-          elseif MangAdmin.db.char.requests.favtele then
+          elseif NightmareAdmin.db.char.requests.favtele then
             if tele["checked"] then
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.teles[key]["checked"] = false; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.teles[key]["checked"] = false; PopupScrollUpdate() end)
             else
-              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() MangAdmin.db.account.favorites.teles[key]["checked"] = true; PopupScrollUpdate() end)
+              getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetScript("OnClick", function() NightmareAdmin.db.account.favorites.teles[key]["checked"] = true; PopupScrollUpdate() end)
             end
           end
           getglobal("ma_PopupScrollBarEntry"..line.."ChkBtn"):SetChecked(tele["checked"])
@@ -2631,26 +2631,26 @@ function PopupScrollUpdate()
         end
       end
     else
-      if MangAdmin.db.char.requests.tele then
-        MangAdmin:NoResults("search")
-      elseif MangAdmin.db.char.requests.favtele then
-        MangAdmin:NoResults("favorites")
+      if NightmareAdmin.db.char.requests.tele then
+        NightmareAdmin:NoResults("search")
+      elseif NightmareAdmin.db.char.requests.favtele then
+        NightmareAdmin:NoResults("favorites")
       end
     end
     
   else
-    MangAdmin:NoResults("search")
+    NightmareAdmin:NoResults("search")
   end
 end
 
 
-function MangAdmin:InlineScrollUpdate_temp()
+function NightmareAdmin:InlineScrollUpdate_temp()
     ma_ticketscrollframe:Hide()
-    MangAdmin:ChatMsg(".ticket list")
+    NightmareAdmin:ChatMsg(".ticket list")
     local ticketCount = 0
-    table.foreachi(MangAdmin.db.account.buffer.tickets, function() ticketCount = ticketCount + 1 end)
+    table.foreachi(NightmareAdmin.db.account.buffer.tickets, function() ticketCount = ticketCount + 1 end)
     if ticketCount > 0 then
-        MangAdmin:ChatMsg("TickCount"..ticketCount)
+        NightmareAdmin:ChatMsg("TickCount"..ticketCount)
         ma_ticketscrollframe1:SetText("Loading")
         local lineplusoffset
         local line
@@ -2683,7 +2683,7 @@ end
 
 
 -- STYLE FUNCTIONS
-function MangAdmin:ToggleTransparency()
+function NightmareAdmin:ToggleTransparency()
   if self.db.account.style.transparency.backgrounds < 1.0 then
     self.db.account.style.transparency.backgrounds = 1.0
   else
@@ -2692,15 +2692,15 @@ function MangAdmin:ToggleTransparency()
   ReloadUI()
 end
 
-function MangAdmin:ChangeTransparency(element)
+function NightmareAdmin:ChangeTransparency(element)
   if element == "frames" then
-    MangAdmin.db.account.style.transparency.frames = string.format("%.2f", ma_frmtrslider:GetValue())
+    NightmareAdmin.db.account.style.transparency.frames = string.format("%.2f", ma_frmtrslider:GetValue())
   elseif element == "buttons" then
-    MangAdmin.db.account.style.transparency.buttons = string.format("%.2f", ma_btntrslider:GetValue())
+    NightmareAdmin.db.account.style.transparency.buttons = string.format("%.2f", ma_btntrslider:GetValue())
   end
 end
 
-function MangAdmin:ToggleTooltips()
+function NightmareAdmin:ToggleTooltips()
   if self.db.account.style.showtooltips then
     self.db.account.style.showtooltips = false
   else
@@ -2709,7 +2709,7 @@ function MangAdmin:ToggleTooltips()
   ReloadUI()
 end
 
-function MangAdmin:ToggleMinimenu()
+function NightmareAdmin:ToggleMinimenu()
   if self.db.account.style.showminimenu then
     self.db.account.style.showminimenu = false
   else
@@ -2718,7 +2718,7 @@ function MangAdmin:ToggleMinimenu()
   ReloadUI()
 end
 
-function MangAdmin:InitCheckButtons()
+function NightmareAdmin:InitCheckButtons()
   if self.db.account.style.transparency.backgrounds < 1.0 then
     ma_checktransparencybutton:SetChecked(true)
   else
@@ -2729,7 +2729,7 @@ function MangAdmin:InitCheckButtons()
   ma_showminimenubutton:SetChecked(self.db.account.style.showminimenu)
   ma_showtooltipsbutton:SetChecked(self.db.account.style.showtooltips)
   ma_showchatoutputbutton:SetChecked(self.db.account.style.showchat)
-  local dp = MangAdmin.db.account.style.delayparam
+  local dp = NightmareAdmin.db.account.style.delayparam
   if dp == Nil or dp == "" then dp = "4000" end
   ma_delayparam:SetText(dp)
 end
@@ -2738,12 +2738,12 @@ end
 
 
 
-function MangAdmin:CloseButton(name)
+function NightmareAdmin:CloseButton(name)
   if name == "bg" then
-    MangAdmin:SearchReset()
+    NightmareAdmin:SearchReset()
     FrameLib:HandleGroup("bg", function(frame) frame:Hide() end)
   elseif name == "popup" then
-    MangAdmin:SearchReset()
+    NightmareAdmin:SearchReset()
     FrameLib:HandleGroup("popup", function(frame) frame:Hide()  end)
   elseif name == "popup2" then
     FrameLib:HandleGroup("popup2", function(frame) frame:Hide()  end)
